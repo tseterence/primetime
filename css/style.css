@@ -1,0 +1,50 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+    color: #222222;
+}
+
+body {
+    background: #aaaaaa;
+}
+
+nav {
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    font-size: 30px;
+    display: inline;
+    text-align: center;
+    margin: 14px 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    filter: invert(19%) sepia(2%) saturate(25%) hue-rotate(314deg) brightness(88%) contrast(91%);
+}
+
+img:hover, button:hover {
+    cursor: pointer;
+    color: black;
+}
+
+button {
+    width: 25%;
+    height: 5%;
+}
+
+#number {
+    font-size: 72px;
+}
