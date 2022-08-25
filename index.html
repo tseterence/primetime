@@ -42,7 +42,7 @@
     <div id="end-screen" class="screen" style="display: none">
         <h1>Game Over</h1>
         <div>
-            <h2 id="reason"></h2>
+            <h2 id="reason"></h2><br>
             <h3>You scored: <span id="final-score"></span></h3>
         </div>
         <button class="play" onclick="startGame()">Play Again</button>
@@ -62,7 +62,7 @@
                 <td>Countdown from</td>
                 <td>
                     <button id="subSec" class="settings">-</button>
-                    <input id="inputSeconds" type="text" onchange="resetHighScore()" value="5" readonly="readonly">
+                    <input id="inputSeconds" type="text" onchange="resetHighScore()" value="30" readonly="readonly">
                     <button id="addSec" class="settings">+</button>
                 </td>
             </tr>
