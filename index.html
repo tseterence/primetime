@@ -14,14 +14,14 @@
     <nav>
         <ul>
             <li><a href="#" id="home">PrimeTime</a></li>
-            <li><img src="images/circle-info-solid.svg" alt="" class="icon" onclick="showInfo()"></li>
+            <li><img src="images/circle-info-solid.svg" alt="" class="icon" onclick="showAbout()"></li>
             <li><img src="images/gear-solid.svg" alt="" class="icon" onclick="showSettings()"></li>
         </ul>
     </nav>
     <div id="start-screen" class="screen" style="display: block">
         <h1>Welcome to PrimeTime!</h1>
         <h2>Identify the prime numbers</h2>
-        <button onclick="startGame()">Start Game</button>
+        <button class="play" onclick="startGame()">Start Game</button>
     </div>
     <div id="play-screen" class="screen" style="display: none">
         <div class="scores">
@@ -29,43 +29,57 @@
             <h2>Current Score: <span id="current-score">0</span></h2>
         </div>
         <h2 class="timer">Time left: 
-            <span id="countdown"></span>s
+            <span id="seconds"></span>.<span id="tenthSeconds"></span>s
         </h2>
         <h1 class="number">Is<br>
             <span id="number"></span><br>
             prime?</h1>
         <div class="choice">
-            <button id="no">No</button>
-            <button id="yes">Yes</button>
+            <button id="no" class="option">No</button>
+            <button id="yes" class="option">Yes</button>
         </div>
     </div>
     <div id="end-screen" class="screen" style="display: none">
         <h1>Game Over</h1>
-        <button onclick="startGame()">Play Again</button>
+        <div>
+            <h2 id="reason"></h2>
+            <h3>You scored: <span id="final-score"></span></h3>
+        </div>
+        <button class="play" onclick="startGame()">Play Again</button>
     </div>
     <div id="settings-screen" class="screen" style="display: none">
         <h1>Settings</h1>
+        <table>
+            <tr>
+                <td>Maximum number</td>
+                <td>
+                    <button id="subOne" class="settings">-</button>
+                    <input id="inputMaximum" type="text" onchange="resetHighScore()" value="150" readonly="readonly">
+                    <button id="addOne" class="settings">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Countdown from</td>
+                <td>
+                    <button id="subSec" class="settings">-</button>
+                    <input id="inputSeconds" type="text" onchange="resetHighScore()" value="5" readonly="readonly">
+                    <button id="addSec" class="settings">+</button>
+                </td>
+            </tr>
+        </table>
         <div>
-            Maximum number
-            <button class="minus">-</button>
-            <input id="maximum" type="number" onchange="resetHighScore()" value="200">
-            <button class="plus">+</button>
-        </div>
-        <div>
-            Countdown from
-            <button class="minus">-</button>
-            <input id="seconds" type="number" onchange="resetHighScore()" value="5">
-            <button class="plus">+</button>
-        </div>
-        <div>
-            <button onclick="startGame()">Start Game</button>
+            <button class="play" onclick="startGame()">Start Game</button>
         </div>
     </div>
-    <div id="info-screen" class="screen" style="display: none">
-        <h1>Information</h1>
-        <p>
-            PrimeTime is a number game where you differentiate prime numbers from composite numbers. For each number shown, click "Yes" if the number is prime or "No" if it is not. Sort as many numbers as you can in the given time! But beware - an incorrect response will automatically end the game!
-        </p>
+    <div id="about-screen" class="screen" style="display: none">
+        <div id="description">
+            <h1>About</h1>
+            PrimeTime is an interactive numbers game built to help users identify prime numbers from composite numbers.
+        </div><br>
+        <div id="rules">
+            <h2>Rules</h2>
+            For each number shown, click "Yes" if the number is prime and "No" if it is not. Sort as many numbers correctly in the given time! But beware... one incorrect response and it's game over!
+        </div>
     </div>
 
     <script type="text/javascript" src="main.js"></script>
