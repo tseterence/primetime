@@ -11,19 +11,20 @@ function isPrime(num) {
     return num > 1
 }
 
-// get factors of num (prime factors?)
+// get prime factors of composite num
 function primeFactors(num) {
-    const factors = []
-    let divisor = 2
-    while (num >= 2) {
-        if (num % divisor === 0) {
-            factors.push(divisor)
-            num /= divisor
-        } else {
-            divisor++
+    const factors = {}
+    for (let i = 2; i <= num; i++) {
+        while (num % i === 0) {
+            factors[i] ? factors[i]++ : factors[i] = 1
+            num /= i
         }
     }
-    return factors
+    const str = []
+    for (const key in factors) {
+        factors[key] > 1 ? str.push(`${key}^${factors[key]}`) : str.push(`${key}`)
+    }
+    return str.join(' x ')
 }
 
 function startScreen() {
@@ -60,9 +61,9 @@ function checkPrime(e) {
             document.getElementById('reason').innerHTML = `${document.querySelector('#number').innerHTML} is prime`
         } else if (e.target.id === 'yes') {
             if (document.querySelector('#number').innerHTML === '1') {
-                document.getElementById('reason').innerHTML = `${document.querySelector ('#number').innerHTML} is not prime by definition`
+                document.getElementById('reason').innerHTML = `By definition, 1 is not prime`
             } else {
-                let factors = primeFactors(Number(document.querySelector('#number').    innerHTML)).join(' x ')
+                let factors = primeFactors(Number(document.querySelector('#number').innerHTML))
                 document.getElementById('reason').innerHTML = `${document.querySelector ('#number').innerHTML} = ${factors}`
             }
         }
@@ -113,13 +114,13 @@ function showSettings() {
     t.stop()
 }
 
-// hide all divs with class input
+// hide all divs with class as input
 function hideScreens(cl) {
     let elements = Array.from(document.getElementsByClassName(cl))
     elements.forEach(element => element.style.display = 'none')
 }
 
-// toggle specific div with id input
+// toggle specific div with id as input
 function toggleScreen(id, toggle) {
     let element = document.getElementById(id)
     let display = (toggle) ? 'block' : 'none'
@@ -196,5 +197,5 @@ class Timer {
 
 const t = new Timer()
 
-
+// push and hold feature in settings buttons
 // horizontal swiping ability for mobile?
