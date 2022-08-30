@@ -22,7 +22,7 @@ function primeFactors(num) {
     }
     const str = []
     for (const key in factors) {
-        factors[key] > 1 ? str.push(`${key}^${factors[key]}`) : str.push(`${key}`)
+        factors[key] > 1 ? str.push(`${key}<sup>${factors[key]}</sup>`) : str.push(`${key}`)
     }
     return str.join(' x ')
 }
@@ -38,7 +38,6 @@ function startGame() {
     hideScreens('screen')
     toggleScreen('play-screen', true)
 
-    console.log('game started')
     document.querySelector('#current-score').innerHTML = '0'
     document.querySelector('#number').innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
     
@@ -69,7 +68,8 @@ function checkPrime(e) {
         }
     } else {
         // right answer - continue game
-        document.querySelector('#current-score').innerHTML++
+        document.getElementById('current-score').innerHTML++
+        checkHighScore()
         document.querySelector('#number').innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
     }
 }
@@ -78,10 +78,7 @@ function endGame() {
     hideScreens('screen')
     toggleScreen('end-screen', true)
 
-    console.log('game ended')
-
     displayResult()
-    checkHighScore()
 }
 
 function displayResult() {
@@ -91,8 +88,8 @@ function displayResult() {
 }
 
 function checkHighScore() {
-    if (document.querySelector('#current-score').innerHTML > document.querySelector('#high-score').innerHTML) {
-        document.querySelector('#high-score').innerHTML = document.querySelector('#current-score').innerHTML
+    if (Number(document.getElementById('current-score').innerHTML) > Number(document.getElementById('high-score').innerHTML)) {
+        document.getElementById('high-score').innerHTML = document.getElementById('current-score').innerHTML
     }
 }
 
@@ -197,5 +194,11 @@ class Timer {
 
 const t = new Timer()
 
+// Jean's recs:
+    // apply color & size theory
+    // use color to highlight current score, when running out of time
+    // sounds to indicate right vs wrong?
+    // less formal font choice
+    // icons on top kinda big
 // push and hold feature in settings buttons
 // horizontal swiping ability for mobile?
