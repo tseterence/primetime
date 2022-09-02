@@ -1,86 +1,120 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrimeTime</title>
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
     <nav>
+        <div class="logo"><a href="#" id="home">PrimeTime</a></div>
         <ul>
-            <li><a href="#" id="home">PrimeTime</a></li>
-            <li><img src="images/circle-info-solid.svg" alt="" class="icon" onclick="showAbout()"></li>
-            <li><img src="images/gear-solid.svg" alt="" class="icon" onclick="showSettings()"></li>
+            <li>
+                <img src="images/circle-info-solid.svg" alt="about icon" class="icon" onclick="showAbout()" />
+            </li>
+            <li>
+                <img src="images/gear-solid.svg" alt="settings icon" class="icon" onclick="showSettings()" />
+            </li>
         </ul>
     </nav>
-    <div id="start-screen" class="screen" style="display: block">
-        <h1>Welcome to PrimeTime!</h1>
-        <h2>Identify the prime numbers</h2>
-        <button class="play" onclick="startGame()">Start Game</button>
-    </div>
-    <div id="play-screen" class="screen" style="display: none">
-        <div class="scores">
-            <h3>High Score: <span id="high-score">0</span></h3>
-            <h2>Current Score: <span id="current-score">0</span></h2>
+
+    <main>
+        <div id="start-screen" class="screen" style="display: block">
+            <h1>Welcome to PrimeTime!</h1>
+            <h2>Identify the prime numbers</h2>
+            <button class="start" onclick="startGame()">Start Game</button>
         </div>
-        <h2 class="timer">Time left: 
-            <span id="seconds"></span>.<span id="tenthSeconds"></span>s
-        </h2>
-        <h1 class="number">Is<br>
-            <span id="number"></span><br>
-            prime?</h1>
-        <div class="choice">
-            <button id="no" class="option">No</button>
-            <button id="yes" class="option">Yes</button>
+
+        <div id="play-screen" class="screen" style="display: none">
+            <div class="scores">
+                <h3>High Score: <span id="high-score">0</span></h3>
+                <h2>Current Score: <span id="current-score">0</span></h2>
+            </div>
+            <h2 class="timer">
+                Time left: <span id="seconds"></span>.<span id="tenthSeconds"></span>s
+            </h2>
+            <h1 class="number">
+                Is<br />
+                <span id="number"></span><br />
+                prime?
+            </h1>
+            <div class="choice">
+                <button id="no" class="option">No</button>
+                <button id="yes" class="option">Yes</button>
+            </div>
         </div>
-    </div>
-    <div id="end-screen" class="screen" style="display: none">
-        <h1>Game Over</h1>
-        <div>
-            <h2 id="reason"></h2><br>
-            <h3>You scored: <span id="final-score"></span></h3>
+
+        <div id="end-screen" class="screen" style="display: none">
+            <h1>Game Over</h1>
+            <div>
+                <h2 id="reason"></h2>
+                <br />
+                <h3>You scored: <span id="final-score"></span></h3>
+            </div>
+            <button class="start" onclick="startGame()">Play Again</button>
         </div>
-        <button class="play" onclick="startGame()">Play Again</button>
-    </div>
-    <div id="settings-screen" class="screen" style="display: none">
-        <h1>Settings</h1>
-        <table>
-            <tr>
-                <td>Maximum number</td>
-                <td>
-                    <button id="subOne" class="settings">-</button>
-                    <input id="inputMaximum" type="text" onchange="resetHighScore()" value="150" readonly="readonly">
-                    <button id="addOne" class="settings">+</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Countdown from</td>
-                <td>
-                    <button id="subSec" class="settings">-</button>
-                    <input id="inputSeconds" type="text" onchange="resetHighScore()" value="30" readonly="readonly">
-                    <button id="addSec" class="settings">+</button>
-                </td>
-            </tr>
-        </table>
-        <div>
-            <button class="play" onclick="startGame()">Start Game</button>
+
+        <div id="settings-screen" class="screen" style="display: none">
+            <h1>Settings</h1>
+            <table>
+                <tr>
+                    <td>Maximum number</td>
+                    <td>
+                        <button id="subOne" class="settings">-</button>
+                        <input id="inputMaximum" type="text" onchange="resetHighScore()" value="150"
+                            readonly="readonly" />
+                        <button id="addOne" class="settings">+</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Countdown from</td>
+                    <td>
+                        <button id="subSec" class="settings">-</button>
+                        <input id="inputSeconds" type="text" onchange="resetHighScore()" value="30"
+                            readonly="readonly" />
+                        <button id="addSec" class="settings">+</button>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>Difficult mode</td>
+                    <td>
+                        <label class="switch"></label>
+                        <input type="checkbox" id="toggle-btn">
+                    </td>
+                </tr> -->
+            </table>
+            <div>
+                <button class="start" onclick="startGame()">Start Game</button>
+            </div>
         </div>
-    </div>
-    <div id="about-screen" class="screen" style="display: none">
-        <div id="description">
-            <h1>About</h1>
-            PrimeTime is an interactive numbers game built to help users identify prime numbers from composite numbers.
-        </div><br>
-        <div id="rules">
-            <h2>Rules</h2>
-            For each number shown, click "Yes" if the number is prime and "No" if it is not. Sort as many numbers correctly in the given time! But beware... one incorrect response and it's game over!
+
+        <div id="about-screen" class="screen" style="display: none">
+            <div id="description">
+                <h1>About</h1>
+                PrimeTime is an interactive numbers game built to help users identify
+                prime numbers from composite numbers.
+            </div>
+            <br />
+            <div id="rules">
+                <h2>Rules</h2>
+                <p>
+                    For each number shown, click "Yes" if the number is prime and "No" if
+                    it is not. Sort as many numbers correctly in the given time! But
+                    beware... one incorrect response and it's game over!
+                </p><br>
+                <p>
+                    Customize your experience under game settings.
+                </p><br><br>
+                <!-- <p>Too easy?</p>
+                <p>Try out difficult mode!</p> -->
+            </div>
         </div>
-    </div>
+    </main>
 
     <script type="text/javascript" src="main.js"></script>
 </body>
