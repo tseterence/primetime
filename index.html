@@ -55,6 +55,7 @@
                 <h2 id="reason"></h2>
                 <br />
                 <h3>You scored: <span id="final-score"></span></h3>
+                <h3>High Score: <span>~~</span></h3>
             </div>
             <button class="start" onclick="startGame()">Play Again</button>
         </div>
@@ -80,13 +81,20 @@
                         <button id="addSec" class="settings">+</button>
                     </td>
                 </tr>
-                <!-- <tr>
+                <tr>
                     <td>Difficult mode</td>
                     <td>
-                        <label class="switch"></label>
-                        <input type="checkbox" id="toggle-btn">
+                        <label class="switch">
+                            <input type="checkbox" id="togBtn" onchange="resetHighScore()">
+                            <div class="slider round">
+                                <!--ADDED HTML -->
+                                <span class="on">ON</span>
+                                <span class="off">OFF</span>
+                                <!--END-->
+                            </div>
+                        </label>
                     </td>
-                </tr> -->
+                </tr>
             </table>
             <div>
                 <button class="start" onclick="startGame()">Start Game</button>
@@ -96,8 +104,14 @@
         <div id="about-screen" class="screen" style="display: none">
             <div id="description">
                 <h1>About</h1>
-                PrimeTime is an interactive numbers game built to help users identify
-                prime numbers from composite numbers.
+                <p>
+                    PrimeTime is an interactive numbers game built to help users practice identifying
+                    prime numbers from composite numbers.
+                </p><br>
+                <p>
+                    A prime number is a whole number greater than 1 that has exactly two factors - 1
+                    and itself.
+                </p><br>
             </div>
             <br />
             <div id="rules">

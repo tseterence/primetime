@@ -1,6 +1,8 @@
 // return random num from 1 to num, inclusive
 function getNum(num) {
-    return Math.floor(Math.random() * num + 1)
+    let result = Math.floor(Math.random() * num + 1)
+    if (togBtn.checked && result % 2 === 0) return getNum(num)
+    else return result
 }
 
 // check if num is prime
@@ -119,8 +121,8 @@ function hideScreens(cl) {
 
 // toggle specific div with id as input
 function toggleScreen(id, toggle) {
-    let element = document.getElementById(id)
-    let display = (toggle) ? 'block' : 'none'
+    const element = document.getElementById(id)
+    const display = (toggle) ? 'block' : 'none'
     element.style.display = display
 }
 
@@ -193,6 +195,10 @@ class Timer {
 }
 
 const t = new Timer()
+
+
+const togBtn = document.getElementById('togBtn')
+console.log(togBtn.checked)
 
 // Jean's recs:
     // apply color & size theory
