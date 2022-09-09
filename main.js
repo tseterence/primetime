@@ -197,8 +197,30 @@ class Timer {
 const t = new Timer()
 
 
+// difficult mode
 const togBtn = document.getElementById('togBtn')
 console.log(togBtn.checked)
+
+
+// swipe function
+let touchstartX = 0
+let touchendX = 0
+    
+function checkDirection() {
+    if (document.getElementById('play-screen').style.display === 'block') {
+        if (touchendX < touchstartX) document.getElementById('no').click()
+        if (touchendX > touchstartX) document.getElementById('yes').click()
+    }
+}
+
+document.addEventListener('touchstart', e => {
+  touchstartX = e.changedTouches[0].screenX
+})
+
+document.addEventListener('touchend', e => {
+  touchendX = e.changedTouches[0].screenX
+  checkDirection()
+})
 
 // Jean's recs:
     // apply color & size theory
@@ -207,4 +229,3 @@ console.log(togBtn.checked)
     // less formal font choice
     // icons on top kinda big
 // push and hold feature in settings buttons
-// horizontal swiping ability for mobile?
