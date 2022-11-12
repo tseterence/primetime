@@ -11,17 +11,34 @@
 </head>
 
 <body>
-    <nav>
-        <div class="logo"><a href="#" id="home">PrimeTime</a></div>
-        <ul>
+    <header>
+        <div class="menuLeft">
+            <a href="https://github.com/ttse23" target="_blank">
+                <img src="images/github.png" alt="github icon" class="icon"/>
+            </a>
+            <button type="button" onclick="showHelp()">
+                <img src="images/help.png" alt="help icon" class="icon"/>
+            </button>
+        </div>
+        <div class="title"><a href="#" id="home">PrimeTime</a></div>
+        <div class="menuRight">
+            <button type="button" onclick="showSettings()">
+                <img src="images/graph.png" alt="chart icon" class="icon"/>
+            </button>
+            <button type="button" onclick="showSettings()">
+                <img src="images/settings.png" alt="settings icon" class="icon"/>
+            </button>
+        </div>
+
+        <!-- <ul>
             <li>
-                <img src="images/circle-info-solid.svg" alt="about icon" class="icon" onclick="showAbout()" />
+                <img src="images/circle-question-regular.svg" alt="about icon" class="icon" onclick="showAbout()" />
             </li>
             <li>
                 <img src="images/gear-solid.svg" alt="settings icon" class="icon" onclick="showSettings()" />
             </li>
-        </ul>
-    </nav>
+        </ul> -->
+    </header>
 
     <main>
         <div id="start-screen" class="screen" style="display: block">
@@ -64,6 +81,20 @@
             <h1>Settings</h1>
             <table>
                 <tr>
+                    <td>Hard Mode</td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="togBtn" onchange="resetHighScore()">
+                            <div class="slider round">
+                                <!--ADDED HTML -->
+                                <span class="on">ON</span>
+                                <span class="off">OFF</span>
+                                <!--END-->
+                            </div>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
                     <td>Maximum number</td>
                     <td>
                         <button id="subOne" class="settings">-</button>
@@ -81,20 +112,18 @@
                         <button id="addSec" class="settings">+</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>Difficult mode</td>
+                <!-- <tr>
+                    <td>Dark Theme</td>
                     <td>
                         <label class="switch">
-                            <input type="checkbox" id="togBtn" onchange="resetHighScore()">
+                            <input type="checkbox" id="togBtn" onchange="">
                             <div class="slider round">
-                                <!--ADDED HTML -->
                                 <span class="on">ON</span>
                                 <span class="off">OFF</span>
-                                <!--END-->
                             </div>
                         </label>
                     </td>
-                </tr>
+                </tr> -->
             </table>
             <div>
                 <button class="start" onclick="startGame()">Start Game</button>

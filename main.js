@@ -1,25 +1,25 @@
-// return random num from 1 to num, inclusive
-function getNum(num) {
-    let result = Math.floor(Math.random() * num + 1)
-    if (togBtn.checked && result % 2 === 0) return getNum(num)
+// return random num from 1 to n, inclusive
+function getNum(n) {
+    let result = Math.floor(Math.random() * n + 1)
+    if (togBtn.checked && result % 2 === 0) return getNum(n)
     else return result
 }
 
-// check if num is prime
-function isPrime(num) {
-    for (let i = 2; i <= Math.sqrt(num); i++) {
-        if (num % i === 0) return false
+// check if n is prime
+function isPrime(n) {
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false
     }
-    return num > 1
+    return n > 1
 }
 
-// get prime factors of composite num
-function primeFactors(num) {
+// get prime factors of composite n
+function primeFactors(n) {
     const factors = {}
-    for (let i = 2; i <= num; i++) {
-        while (num % i === 0) {
+    for (let i = 2; i <= n; i++) {
+        while (n % i === 0) {
             factors[i] ? factors[i]++ : factors[i] = 1
-            num /= i
+            n /= i
         }
     }
     const str = []
@@ -99,7 +99,7 @@ function resetHighScore() {
     document.querySelector('#high-score').innerHTML = '0'
 }
 
-function showAbout() {
+function showHelp() {
     hideScreens('screen')
     toggleScreen('about-screen', true)
 
@@ -222,10 +222,13 @@ document.addEventListener('touchend', e => {
   checkDirection()
 })
 
+// use localstorage for high score
+// with keyboard: left arrow = no, right arrow = yes
+// if timer < 5s, turn font red
+// credit icons
 // Jean's recs:
     // apply color & size theory
     // use color to highlight current score, when running out of time
-    // sounds to indicate right vs wrong?
     // less formal font choice
     // icons on top kinda big
 // push and hold feature in settings buttons

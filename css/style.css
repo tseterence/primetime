@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
 * {
   padding: 0;
   margin: 0;
@@ -8,35 +11,67 @@
 }
 
 body {
-  background: #aaaaaa;
+  background: white;
+  /* background: #aaaaaa; */
   margin: 0 auto;
 }
 
-/* navbar styling */
-nav {
+/* header styling */
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  padding: 16px;
+  border-bottom: 1px solid black;
 }
-nav a {
-  font-size: 48px;
+header a {
+  /* font-family: 'Alfa Slab One'; */
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
 }
-nav ul {
+/* header ul {
   list-style-type: none;
   display: flex;
   align-items: center;
 }
-nav ul li {
+header ul li {
   display: inline-block;
   margin-left: 25px;
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 32px;
+} */
+
+/* .title {
+  width: 100%;
+} */
+.menuLeft,
+.menuRight {
+  width: 100px;
+  display: flex;
+  align-items: center;
+}
+.menuLeft {
+  justify-content: start;
+}
+.menuRight {
+  justify-content: end;
 }
 .icon {
-  filter: invert(19%) sepia(2%) saturate(25%) hue-rotate(314deg) brightness(88%)
-    contrast(91%);
+  height: 28px;
+  width: 28px;
+  margin: 0 8px;
+}
+
+.menuLeft button,
+.menuRight button {
+  /* width: 28px;
+  height: 28px; */
+  /* margin: 6px; */
+  border: none;
+  background-color: transparent;
+  /* filter: invert(19%) sepia(2%) saturate(25%) hue-rotate(314deg) brightness(88%)
+    contrast(91%); */
 }
 img:hover,
 button:hover {
@@ -194,18 +229,23 @@ input {
 }
 
 /* media queries */
-@media (max-width: 450px) {
-  nav {
-    padding: 15px;
+@media (max-width: 768px) {
+  header {
+    padding: 12px;
   }
-  nav a {
-    font-size: 28px;
+  header a {
+    font-size: 26px;
   }
-  nav ul li {
+  .icon {
+    height: 24px;
+    width: 24px;
+    margin: 0 4px;
+  }
+  /* header ul li {
     margin-left: 15px;
-    width: 30px;
-    height: 30px;
-  }
+    width: 26px;
+    height: 26px;
+  } */
 
   table {
     margin: 40px auto;
