@@ -1,3 +1,43 @@
+// local storage functionalities
+    // save indiv game scores
+    // games played
+    // high score
+    // avg score
+    // completed?
+
+    // display distribution of scores under statistics
+        // ranges: 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-44, 45-49
+
+function updateStatistics(score) {
+    const stats = JSON.parse(localStorage.getItem('statistics'));
+    if (stats) {
+        stats.numGames += 1;
+        stats.gameScores.push(score);
+        if (score > stats.maxScore) stats.maxScore = score;
+        stats.avgScore = Math.round((stats.avgScore * (stats.numGames - 1) + score) / stats.numGames * 100) / 100;
+
+        localStorage.setItem('statistics', JSON.stringify(stats))
+    } else {
+        localStorage.setItem('statistics', JSON.stringify({'numGames': 1, 'maxScore': score, 'avgScore': score, 'gameScores': [score]}))
+    }
+
+    // statistics['numGames'] += 1;
+    // if (score > Number(statistics['maxScore'])) statistics['maxScore'] = score;
+    // statistics['gameScores'].push(score);
+    // statistics['avgScore'] = Math.round((statistics['avgScore'] * (statistics['numGames'] - 1) + score) / statistics['numGames'] * 100) / 100;
+
+    // localStorage.setItem('statistics', JSON.stringify(statistics))
+
+    // let storedData = JSON.parse(localStorage.getItem('statistics'));
+    // console.log(storedData)
+}
+
+function showStatistics() {
+
+}
+
+
+
 // return random num from 1 to n, inclusive
 function getNum(n) {
     let result = Math.floor(Math.random() * n + 1)
@@ -81,6 +121,7 @@ function endGame() {
     toggleScreen('end-screen', true)
 
     displayResult()
+    updateStatistics(Number(document.getElementById('current-score').innerHTML));
 }
 
 function displayResult() {
@@ -109,6 +150,13 @@ function showHelp() {
 function showSettings() {
     hideScreens('screen')
     toggleScreen('settings-screen', true)
+
+    t.stop()
+}
+
+function showStatistics() {
+    hideScreens('screen')
+    toggleScreen('statistics-screen', true)
 
     t.stop()
 }
@@ -201,6 +249,15 @@ const t = new Timer()
 const togBtn = document.getElementById('togBtn')
 console.log(togBtn.checked)
 
+// use arrows on keyboard (only check when game has started)
+document.addEventListener('keydown', (e) => {
+    if (e.key == 'ArrowLeft') {
+        console.log('Left was pressed');
+    } else if (e.key == 'ArrowRight') {
+        console.log('Right was pressed');
+    }
+});
+
 
 // swipe function
 let touchstartX = 0
@@ -222,7 +279,7 @@ document.addEventListener('touchend', e => {
   checkDirection()
 })
 
-// use localstorage for high score
+// use modal instead of 'pages'
 // with keyboard: left arrow = no, right arrow = yes
 // if timer < 5s, turn font red
 // credit icons
@@ -232,3 +289,4 @@ document.addEventListener('touchend', e => {
     // less formal font choice
     // icons on top kinda big
 // push and hold feature in settings buttons
+// add/subtract time based on right/wrong answers

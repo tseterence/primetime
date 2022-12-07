@@ -20,9 +20,11 @@
                 <img src="images/help.png" alt="help icon" class="icon"/>
             </button>
         </div>
+
         <div class="title"><a href="#" id="home">PrimeTime</a></div>
+
         <div class="menuRight">
-            <button type="button" onclick="showSettings()">
+            <button type="button" onclick="showStatistics()">
                 <img src="images/graph.png" alt="chart icon" class="icon"/>
             </button>
             <button type="button" onclick="showSettings()">
@@ -77,6 +79,53 @@
             <button class="start" onclick="startGame()">Play Again</button>
         </div>
 
+        <div id="about-screen" class="screen" style="display: none">
+            <div id="description">
+                <h1>How To Play</h1>
+                <h2>Sort as many numbers as you can within 30 seconds.</h2>
+                <ul>
+                    <li>
+                        For each number shown, select "Yes" if the number is prime and "No" if it is not.
+                    </li>
+                    <li>
+                        A prime number is a number that is only divisible by 1 and itself.
+                    </li>
+                    <li>
+                        The game will end immediately if an incorrect response is given!
+                    </li>
+                </ul>
+                <!-- <p>
+                    PrimeTime is an interactive numbers game built to help users identify
+                    prime numbers from composite numbers.
+                </p><br>
+                <p>
+                    A prime number is a whole number greater than 1 that has exactly two factors - 1
+                    and itself.
+                </p><br> -->
+            </div>
+            <!-- <br />
+            <div id="rules">
+                <h2>Rules</h2>
+                <p>
+                    For each number shown, click "Yes" if the number is prime and "No" if
+                    it is not. Sort as many numbers correctly in the given time! But
+                    beware... one incorrect response and it's game over!
+                </p><br>
+                <p>
+                    Customize your experience under game settings.
+                </p><br><br>
+                <p>Too easy?</p>
+                <p>Try out difficult mode!</p>
+            </div> -->
+        </div>
+
+        <div id="statistics-screen" class="screen" style="display: none">
+            <div id="statistics">
+                <h1>Stats</h1>
+                <h2>High Score: </h2>
+            </div>
+        </div>
+
         <div id="settings-screen" class="screen" style="display: none">
             <h1>Settings</h1>
             <table>
@@ -127,34 +176,6 @@
             </table>
             <div>
                 <button class="start" onclick="startGame()">Start Game</button>
-            </div>
-        </div>
-
-        <div id="about-screen" class="screen" style="display: none">
-            <div id="description">
-                <h1>About</h1>
-                <p>
-                    PrimeTime is an interactive numbers game built to help users identify
-                    prime numbers from composite numbers.
-                </p><br>
-                <p>
-                    A prime number is a whole number greater than 1 that has exactly two factors - 1
-                    and itself.
-                </p><br>
-            </div>
-            <br />
-            <div id="rules">
-                <h2>Rules</h2>
-                <p>
-                    For each number shown, click "Yes" if the number is prime and "No" if
-                    it is not. Sort as many numbers correctly in the given time! But
-                    beware... one incorrect response and it's game over!
-                </p><br>
-                <p>
-                    Customize your experience under game settings.
-                </p><br><br>
-                <!-- <p>Too easy?</p>
-                <p>Try out difficult mode!</p> -->
             </div>
         </div>
     </main>
