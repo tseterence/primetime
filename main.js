@@ -1,42 +1,86 @@
-// local storage functionalities
-    // save indiv game scores
-    // games played
-    // high score
+// local storage data
+    // total games played
     // avg score
-    // completed?
+    // high score
+    // indiv game scores
+    // score distribution by range
+    // time spent
+    // hard mode enabled? (boolean)
 
     // display distribution of scores under statistics
-        // ranges: 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-44, 45-49
+
+
+// modal for help, stats, and settings
+    // check active screen
+        // if game is active OR home screen showing -> show home screen
+        // if game over screen showing -> do nothing 
+    // open corresponding modal
+    
+initLocalStorage();
+
+function initLocalStorage() {
+    if (!localStorage.getItem('statistics')) {
+        const stats = {'numGames': 0, 'avgScore': 0, 'highScore': 0, 'gameScores': [], 'scoreDist': {'0': 0, '5': 0, '10': 0, '15': 0, '20': 0, '25': 0, '30': 0, '35': 0, '40': 0, '45': 0, '50': 0, '55': 0}}
+        localStorage.setItem('statistics', JSON.stringify(stats))
+    }
+}
 
 function updateStatistics(score) {
     const stats = JSON.parse(localStorage.getItem('statistics'));
-    if (stats) {
-        stats.numGames += 1;
-        stats.gameScores.push(score);
-        if (score > stats.maxScore) stats.maxScore = score;
-        stats.avgScore = Math.round((stats.avgScore * (stats.numGames - 1) + score) / stats.numGames * 100) / 100;
+    
+    stats['numGames'] += 1;
+    stats['gameScores'].push(score);
+    if (score > stats['highScore']) stats['highScore'] = score;
+    stats['avgScore'] = Math.round(stats['gameScores'].reduce((acc, curr) => acc + curr, 0) / stats['numGames'] * 10) / 10;
+    stats['scoreDist'][String(Math.floor(score / 5) * 5)] += 1;
 
-        localStorage.setItem('statistics', JSON.stringify(stats))
-    } else {
-        localStorage.setItem('statistics', JSON.stringify({'numGames': 1, 'maxScore': score, 'avgScore': score, 'gameScores': [score]}))
+    localStorage.setItem('statistics', JSON.stringify(stats))
+}
+
+function populateStatistics() {
+    const numGamesEl = document.getElementById('num_games').querySelector('.stats-num');
+    const highScoreEl = document.getElementById('high_score').querySelector('.stats-num');
+    const avgScoreEl = document.getElementById('avg_score').querySelector('.stats-num');
+
+    const stats = JSON.parse(localStorage.getItem('statistics'));
+
+    numGamesEl.innerHTML = stats['numGames'];
+    highScoreEl.innerHTML = stats['highScore'];
+    avgScoreEl.innerHTML = stats['avgScore'];
+
+    const maxRange = 45;
+
+    // show score distribution (vertical histogram)
+    // by score ranges?: 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-44, 45-49
+    let scoreDistList = [];
+    for (let i = 0; i <= maxRange; i += 5) {
+        scoreDistList.push(stats['scoreDist'][String(i)])
     }
 
-    // statistics['numGames'] += 1;
-    // if (score > Number(statistics['maxScore'])) statistics['maxScore'] = score;
-    // statistics['gameScores'].push(score);
-    // statistics['avgScore'] = Math.round((statistics['avgScore'] * (statistics['numGames'] - 1) + score) / statistics['numGames'] * 100) / 100;
+    const mostFreq = Math.max(...scoreDistList)
+    for (let i = 0; i <= maxRange; i += 5) {
+        const barEl = document.getElementById('bar_' + String(i));
+        const barWidth = 6 + 94 * (stats['scoreDist'][String(i)] / mostFreq);
+        barEl.style.width = String(barWidth) + "%";
 
-    // localStorage.setItem('statistics', JSON.stringify(statistics))
-
-    // let storedData = JSON.parse(localStorage.getItem('statistics'));
-    // console.log(storedData)
+        const barLabelEl = document.getElementById('bar_' + String(i)).querySelector('.num-range');
+        barLabelEl.innerHTML = stats['scoreDist'][String(i)];
+    }
 }
 
-function showStatistics() {
+// variables
+const homeBtn = document.getElementById('home')
+const startBtn = document.getElementById('start')
+const restartBtn = document.getElementById('restart')
+const noBtn = document.getElementById('no')
+const yesBtn = document.getElementById('yes')
+const currentNum = document.getElementById('number')
+const currentScore = document.getElementById('current-score')
 
-}
-
-
+// event listeners
+noBtn.addEventListener('click', checkPrime)
+yesBtn.addEventListener('click', checkPrime)
+homeBtn.addEventListener('click', startScreen)
 
 // return random num from 1 to n, inclusive
 function getNum(n) {
@@ -80,39 +124,37 @@ function startGame() {
     hideScreens('screen')
     toggleScreen('play-screen', true)
 
-    document.querySelector('#current-score').innerHTML = '0'
-    document.querySelector('#number').innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
+    currentScore.innerHTML = '0'
+    currentNum.innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
     
     t.start()
 }
 
 
-document.querySelector('#no').addEventListener('click', checkPrime)
-document.querySelector('#yes').addEventListener('click', checkPrime)
-document.querySelector('#home').addEventListener('click', startScreen)
+
 
 
 function checkPrime(e) {
-    if ((e.target.id === 'no' && isPrime(Number(document.querySelector('#number').innerHTML))) || (e.target.id === 'yes' && !isPrime(Number(document.querySelector('#number').innerHTML)))) {
+    if ((e.target.id === 'no' && isPrime(Number(currentNum.innerHTML))) || (e.target.id === 'yes' && !isPrime(Number(currentNum.innerHTML)))) {
         // wrong answer - game over
         t.stop()
         endGame()
 
         if (e.target.id === 'no') {
-            document.getElementById('reason').innerHTML = `${document.querySelector('#number').innerHTML} is prime`
+            document.getElementById('reason').innerHTML = `${currentNum.innerHTML} is prime`
         } else if (e.target.id === 'yes') {
-            if (document.querySelector('#number').innerHTML === '1') {
+            if (currentNum.innerHTML === '1') {
                 document.getElementById('reason').innerHTML = `By definition, 1 is not prime`
             } else {
-                let factors = primeFactors(Number(document.querySelector('#number').innerHTML))
-                document.getElementById('reason').innerHTML = `${document.querySelector ('#number').innerHTML} = ${factors}`
+                let factors = primeFactors(Number(currentNum.innerHTML))
+                document.getElementById('reason').innerHTML = `${currentNum.innerHTML} = ${factors}`
             }
         }
     } else {
         // right answer - continue game
-        document.getElementById('current-score').innerHTML++
+        currentScore.innerHTML++
         checkHighScore()
-        document.querySelector('#number').innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
+        currentNum.innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
     }
 }
 
@@ -121,18 +163,18 @@ function endGame() {
     toggleScreen('end-screen', true)
 
     displayResult()
-    updateStatistics(Number(document.getElementById('current-score').innerHTML));
+    updateStatistics(Number(currentScore.innerHTML));
 }
 
 function displayResult() {
     // if prime, say prime
     // else show first whole factor
-    document.getElementById('final-score').innerHTML = `${document.getElementById('current-score').innerHTML}`
+    document.getElementById('final-score').innerHTML = `${currentScore.innerHTML}`
 }
 
 function checkHighScore() {
-    if (Number(document.getElementById('current-score').innerHTML) > Number(document.getElementById('high-score').innerHTML)) {
-        document.getElementById('high-score').innerHTML = document.getElementById('current-score').innerHTML
+    if (Number(currentScore.innerHTML) > Number(document.getElementById('high-score').innerHTML)) {
+        document.getElementById('high-score').innerHTML = currentScore.innerHTML
     }
 }
 
@@ -140,12 +182,12 @@ function resetHighScore() {
     document.querySelector('#high-score').innerHTML = '0'
 }
 
-function showHelp() {
-    hideScreens('screen')
-    toggleScreen('about-screen', true)
+// function showHelp() {
+//     hideScreens('screen')
+//     toggleScreen('about-screen', true)
 
-    t.stop()
-}
+//     t.stop()
+// }
 
 function showSettings() {
     hideScreens('screen')
@@ -159,6 +201,8 @@ function showStatistics() {
     toggleScreen('statistics-screen', true)
 
     t.stop()
+
+    populateStatistics();
 }
 
 // hide all divs with class as input
@@ -180,7 +224,7 @@ document.querySelector('#subOne').addEventListener('click', () => {
     }
 })
 document.querySelector('#addOne').addEventListener('click', () => {
-    if (document.getElementById('inputMaximum').value < 1000) {
+    if (document.getElementById('inputMaximum').value < 200) {
         document.getElementById('inputMaximum').innerHTML = document.getElementById('inputMaximum').value++
     }
 })
@@ -191,7 +235,7 @@ document.querySelector('#subSec').addEventListener('click', () => {
     }
 })
 document.querySelector('#addSec').addEventListener('click', () => {
-    if (document.getElementById('inputSeconds').value < 300) {
+    if (document.getElementById('inputSeconds').value < 60) {
         document.getElementById('inputSeconds').innerHTML = document.getElementById('inputSeconds').value++
     }
 })
@@ -247,14 +291,20 @@ const t = new Timer()
 
 // difficult mode
 const togBtn = document.getElementById('togBtn')
-console.log(togBtn.checked)
+// console.log(togBtn.checked)
 
 // use arrows on keyboard (only check when game has started)
 document.addEventListener('keydown', (e) => {
-    if (e.key == 'ArrowLeft') {
-        console.log('Left was pressed');
-    } else if (e.key == 'ArrowRight') {
-        console.log('Right was pressed');
+    if ((document.getElementById('start-screen').style.display === 'block') && e.key === 'Enter') {
+        startBtn.click();
+    }
+    if (document.getElementById('play-screen').style.display === 'block' && (e.key === 'ArrowLeft' || e.key === 'n')) {
+        noBtn.click();
+    } else if (document.getElementById('play-screen').style.display === 'block' && (e.key === 'ArrowRight' || e.key === 'y')) {
+        yesBtn.click();
+    }
+    if ((document.getElementById('end-screen').style.display === 'block') && e.key === 'Enter') {
+        restartBtn.click();
     }
 });
 
@@ -265,8 +315,8 @@ let touchendX = 0
     
 function checkDirection() {
     if (document.getElementById('play-screen').style.display === 'block') {
-        if (touchendX < touchstartX) document.getElementById('no').click()
-        if (touchendX > touchstartX) document.getElementById('yes').click()
+        if (touchendX < touchstartX) noBtn.click()
+        if (touchendX > touchstartX) yesBtn.click()
     }
 }
 
@@ -279,10 +329,68 @@ document.addEventListener('touchend', e => {
   checkDirection()
 })
 
-// use modal instead of 'pages'
-// with keyboard: left arrow = no, right arrow = yes
-// if timer < 5s, turn font red
-// credit icons
+// help modal
+    // stop timer, show start screen, then show modal
+const helpContainer = document.getElementById('help-container');
+function showHelpModal() {
+    helpContainer.classList.add('show');
+    helpContainer.classList.remove('hidden');
+
+    // statsContainer.classList.add('hidden');
+}
+const helpX = document.getElementById('help-modal-close-button');
+helpX.addEventListener('click', e => {
+    helpContainer.classList.add('hidden');
+    helpContainer.classList.remove('show');
+})
+
+// stats modal
+    // stop timer, show start screen, then show modal
+const statsContainer = document.getElementById('stats-container');
+function showStatsModal() {
+    populateStatistics();
+    statsContainer.classList.add('show');
+    statsContainer.classList.remove('hidden');
+
+    // helpContainer.classList.add('hidden');
+}
+const statsX = document.getElementById('stats-modal-close-button');
+statsX.addEventListener('click', e => {
+    statsContainer.classList.add('hidden');
+    statsContainer.classList.remove('show');
+})
+
+// settings modal
+    // stop timer, show start screen, then show modal
+const settingsContainer = document.getElementById('settings-container');
+function showSettingsModal() {
+    settingsContainer.classList.add('show');
+    settingsContainer.classList.remove('hidden');
+}
+const settingsX = document.getElementById('settings-modal-close-button');
+settingsX.addEventListener('click', e => {
+    settingsContainer.classList.add('hidden');
+    settingsContainer.classList.remove('show');
+})
+
+// clicking outside of modal closes it
+window.addEventListener('click', e => {
+    if (e.target === helpContainer) {
+        helpContainer.classList.add('hidden');
+    }
+    if (e.target === statsContainer) {
+        statsContainer.classList.add('hidden');
+    }
+    if (e.target === settingsContainer) {
+        settingsContainer.classList.add('hidden');
+    }
+})
+
+
+// should statistics populate everytime "game over" instead of clicking on graph icon??
+// with keyboard: left arrow = no, right arrow = yes, spacebar OR enter = start game/play again
+
+// if timer < 5s, font turns red
 // Jean's recs:
     // apply color & size theory
     // use color to highlight current score, when running out of time
