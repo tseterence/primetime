@@ -4,25 +4,35 @@
     // high score
     // indiv game scores
     // score distribution by range
-    // time spent
+    // has viewed? -> triggers "How To Play" on page load 
+    // dark theme?
     // hard mode enabled? (boolean)
 
     // display distribution of scores under statistics
 
 
-// modal for help, stats, and settings
+// modals for help, stats, and settings
     // check active screen
         // if game is active OR home screen showing -> show home screen
         // if game over screen showing -> do nothing 
     // open corresponding modal
     
-initLocalStorage();
+window.addEventListener('load', e => {
+    initLocalStorage();
+});
 
 function initLocalStorage() {
     if (!localStorage.getItem('statistics')) {
-        const stats = {'numGames': 0, 'avgScore': 0, 'highScore': 0, 'gameScores': [], 'scoreDist': {'0': 0, '5': 0, '10': 0, '15': 0, '20': 0, '25': 0, '30': 0, '35': 0, '40': 0, '45': 0, '50': 0, '55': 0}}
-        localStorage.setItem('statistics', JSON.stringify(stats))
+        const stats = {'numGames': 0, 'avgScore': 0, 'highScore': 0, 'gameScores': [], 'scoreDist': {'0': 0, '5': 0, '10': 0, '15': 0, '20': 0, '25': 0, '30': 0, '35': 0, '40': 0, '45': 0, '50': 0, '55': 0}};
+        localStorage.setItem('statistics', JSON.stringify(stats));
     }
+    if (!localStorage.getItem('viewedTutorial')) {
+        showHelpModal();
+        localStorage.setItem('viewedTutorial', JSON.stringify(true));
+    }
+    // if (!localStorage.getItem('hardMode')) {
+    //     localStorage.setItem('hardMode', JSON.stringify(false));
+    // }
 }
 
 function updateStatistics(score) {
@@ -34,7 +44,7 @@ function updateStatistics(score) {
     stats['avgScore'] = Math.round(stats['gameScores'].reduce((acc, curr) => acc + curr, 0) / stats['numGames'] * 10) / 10;
     stats['scoreDist'][String(Math.floor(score / 5) * 5)] += 1;
 
-    localStorage.setItem('statistics', JSON.stringify(stats))
+    localStorage.setItem('statistics', JSON.stringify(stats));
 }
 
 function populateStatistics() {
@@ -50,17 +60,15 @@ function populateStatistics() {
 
     const maxRange = 45;
 
-    // show score distribution (vertical histogram)
-    // by score ranges?: 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-44, 45-49
     let scoreDistList = [];
     for (let i = 0; i <= maxRange; i += 5) {
-        scoreDistList.push(stats['scoreDist'][String(i)])
+        scoreDistList.push(stats['scoreDist'][String(i)]);
     }
 
     const mostFreq = Math.max(...scoreDistList)
     for (let i = 0; i <= maxRange; i += 5) {
         const barEl = document.getElementById('bar_' + String(i));
-        const barWidth = 6 + 94 * (stats['scoreDist'][String(i)] / mostFreq);
+        const barWidth = 8 + 92 * (stats['scoreDist'][String(i)] / mostFreq);
         barEl.style.width = String(barWidth) + "%";
 
         const barLabelEl = document.getElementById('bar_' + String(i)).querySelector('.num-range');
@@ -85,8 +93,9 @@ homeBtn.addEventListener('click', startScreen)
 // return random num from 1 to n, inclusive
 function getNum(n) {
     let result = Math.floor(Math.random() * n + 1)
-    if (togBtn.checked && result % 2 === 0) return getNum(n)
-    else return result
+    return result
+    // if (hardModeTogBtn.checked && result % 2 === 0) return getNum(n)
+    // else return result
 }
 
 // check if n is prime
@@ -125,7 +134,7 @@ function startGame() {
     toggleScreen('play-screen', true)
 
     currentScore.innerHTML = '0'
-    currentNum.innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
+    currentNum.innerHTML = `${getNum(100)}`
     
     t.start()
 }
@@ -154,7 +163,7 @@ function checkPrime(e) {
         // right answer - continue game
         currentScore.innerHTML++
         checkHighScore()
-        currentNum.innerHTML = `${getNum(Number(document.getElementById('inputMaximum').value))}`
+        currentNum.innerHTML = `${getNum(100)}`
     }
 }
 
@@ -162,7 +171,9 @@ function endGame() {
     hideScreens('screen')
     toggleScreen('end-screen', true)
 
-    displayResult()
+    document.getElementById('high-score-2').innerHTML = document.getElementById('high-score-1').innerHTML
+
+    displayResult();
     updateStatistics(Number(currentScore.innerHTML));
 }
 
@@ -173,14 +184,14 @@ function displayResult() {
 }
 
 function checkHighScore() {
-    if (Number(currentScore.innerHTML) > Number(document.getElementById('high-score').innerHTML)) {
-        document.getElementById('high-score').innerHTML = currentScore.innerHTML
+    if (Number(currentScore.innerHTML) > Number(document.getElementById('high-score-1').innerHTML)) {
+        document.getElementById('high-score-1').innerHTML = currentScore.innerHTML
     }
 }
 
-function resetHighScore() {
-    document.querySelector('#high-score').innerHTML = '0'
-}
+// function resetHighScore() {
+//     document.querySelector('#high-score').innerHTML = '0'
+// }
 
 // function showHelp() {
 //     hideScreens('screen')
@@ -189,21 +200,21 @@ function resetHighScore() {
 //     t.stop()
 // }
 
-function showSettings() {
-    hideScreens('screen')
-    toggleScreen('settings-screen', true)
+// function showSettings() {
+//     hideScreens('screen')
+//     toggleScreen('settings-screen', true)
 
-    t.stop()
-}
+//     t.stop()
+// }
 
-function showStatistics() {
-    hideScreens('screen')
-    toggleScreen('statistics-screen', true)
+// function showStatistics() {
+//     hideScreens('screen')
+//     toggleScreen('statistics-screen', true)
 
-    t.stop()
+//     t.stop()
 
-    populateStatistics();
-}
+//     populateStatistics();
+// }
 
 // hide all divs with class as input
 function hideScreens(cl) {
@@ -218,27 +229,27 @@ function toggleScreen(id, toggle) {
     element.style.display = display
 }
 
-document.querySelector('#subOne').addEventListener('click', () => {
-    if (document.getElementById('inputMaximum').value > 1) {
-        document.getElementById('inputMaximum').innerHTML = document.getElementById('inputMaximum').value--
-    }
-})
-document.querySelector('#addOne').addEventListener('click', () => {
-    if (document.getElementById('inputMaximum').value < 200) {
-        document.getElementById('inputMaximum').innerHTML = document.getElementById('inputMaximum').value++
-    }
-})
+// document.querySelector('#subOne').addEventListener('click', () => {
+//     if (document.getElementById('inputMaximum').value > 1) {
+//         document.getElementById('inputMaximum').innerHTML = document.getElementById('inputMaximum').value--
+//     }
+// })
+// document.querySelector('#addOne').addEventListener('click', () => {
+//     if (document.getElementById('inputMaximum').value < 200) {
+//         document.getElementById('inputMaximum').innerHTML = document.getElementById('inputMaximum').value++
+//     }
+// })
 
-document.querySelector('#subSec').addEventListener('click', () => {
-    if (document.getElementById('inputSeconds').value > 1) {
-        document.getElementById('inputSeconds').innerHTML = document.getElementById('inputSeconds').value--
-    }
-})
-document.querySelector('#addSec').addEventListener('click', () => {
-    if (document.getElementById('inputSeconds').value < 60) {
-        document.getElementById('inputSeconds').innerHTML = document.getElementById('inputSeconds').value++
-    }
-})
+// document.querySelector('#subSec').addEventListener('click', () => {
+//     if (document.getElementById('inputSeconds').value > 1) {
+//         document.getElementById('inputSeconds').innerHTML = document.getElementById('inputSeconds').value--
+//     }
+// })
+// document.querySelector('#addSec').addEventListener('click', () => {
+//     if (document.getElementById('inputSeconds').value < 60) {
+//         document.getElementById('inputSeconds').innerHTML = document.getElementById('inputSeconds').value++
+//     }
+// })
 
 
 class Timer {
@@ -264,7 +275,7 @@ class Timer {
 
     start() {
         this.startTime = new Date().getTime()
-        this.remainingSeconds = Number(document.getElementById('inputSeconds').value * 1000)
+        this.remainingSeconds = 30 * 1000
         this.endTime = this.startTime + this.remainingSeconds
         
         if (this.remainingSeconds === 0) return;
@@ -290,26 +301,26 @@ const t = new Timer()
 
 
 // difficult mode
-const togBtn = document.getElementById('togBtn')
+const hardModeTogBtn = document.getElementById('hardModeTogBtn')
 // console.log(togBtn.checked)
 
-// use arrows on keyboard (only check when game has started)
+// use arrows on keyboard (only works when game has started)
 document.addEventListener('keydown', (e) => {
-    if ((document.getElementById('start-screen').style.display === 'block') && e.key === 'Enter') {
+    if ((document.getElementById('start-screen').style.display === 'block') && e.code === 'Space') {
         startBtn.click();
     }
-    if (document.getElementById('play-screen').style.display === 'block' && (e.key === 'ArrowLeft' || e.key === 'n')) {
+    if (document.getElementById('play-screen').style.display === 'block' && e.code === 'ArrowLeft') {
         noBtn.click();
-    } else if (document.getElementById('play-screen').style.display === 'block' && (e.key === 'ArrowRight' || e.key === 'y')) {
+    } else if (document.getElementById('play-screen').style.display === 'block' && e.code === 'ArrowRight') {
         yesBtn.click();
     }
-    if ((document.getElementById('end-screen').style.display === 'block') && e.key === 'Enter') {
+    if ((document.getElementById('end-screen').style.display === 'block') && e.code === 'Space') {
         restartBtn.click();
     }
 });
 
 
-// swipe function
+// use swipe on touchscreen (only works when game has started)
 let touchstartX = 0
 let touchendX = 0
     
@@ -333,6 +344,10 @@ document.addEventListener('touchend', e => {
     // stop timer, show start screen, then show modal
 const helpContainer = document.getElementById('help-container');
 function showHelpModal() {
+    if (document.getElementById('play-screen').style.display === 'block') {
+        startScreen();
+    }
+
     helpContainer.classList.add('show');
     helpContainer.classList.remove('hidden');
 
@@ -348,6 +363,10 @@ helpX.addEventListener('click', e => {
     // stop timer, show start screen, then show modal
 const statsContainer = document.getElementById('stats-container');
 function showStatsModal() {
+    if (document.getElementById('play-screen').style.display === 'block') {
+        startScreen();
+    }
+
     populateStatistics();
     statsContainer.classList.add('show');
     statsContainer.classList.remove('hidden');
@@ -362,35 +381,40 @@ statsX.addEventListener('click', e => {
 
 // settings modal
     // stop timer, show start screen, then show modal
-const settingsContainer = document.getElementById('settings-container');
-function showSettingsModal() {
-    settingsContainer.classList.add('show');
-    settingsContainer.classList.remove('hidden');
-}
-const settingsX = document.getElementById('settings-modal-close-button');
-settingsX.addEventListener('click', e => {
-    settingsContainer.classList.add('hidden');
-    settingsContainer.classList.remove('show');
-})
+// const settingsContainer = document.getElementById('settings-container');
+// function showSettingsModal() {
+//     settingsContainer.classList.add('show');
+//     settingsContainer.classList.remove('hidden');
+// }
+// const settingsX = document.getElementById('settings-modal-close-button');
+// settingsX.addEventListener('click', e => {
+//     settingsContainer.classList.add('hidden');
+//     settingsContainer.classList.remove('show');
+// })
 
 // clicking outside of modal closes it
 window.addEventListener('click', e => {
     if (e.target === helpContainer) {
+        helpContainer.classList.remove('show');
         helpContainer.classList.add('hidden');
     }
     if (e.target === statsContainer) {
+        statsContainer.classList.remove('show');
         statsContainer.classList.add('hidden');
     }
-    if (e.target === settingsContainer) {
-        settingsContainer.classList.add('hidden');
-    }
+    // if (e.target === settingsContainer) {
+    //     settingsContainer.classList.remove('show');
+    //     settingsContainer.classList.add('hidden');
+    // }
 })
 
 
-// should statistics populate everytime "game over" instead of clicking on graph icon??
-// with keyboard: left arrow = no, right arrow = yes, spacebar OR enter = start game/play again
+// should statistics populate everytime "game over" instead of only after clicking on graph icon??
+// with keyboard: left arrow = no, right arrow = yes, spacebar = start game/play again
+// with touchscreen (Swipe): left = no, right = yes, up = start game/play again
+// table format for shortcuts under help modal?
 
-// if timer < 5s, font turns red
+// if timer < 5s, font/background turns red
 // Jean's recs:
     // apply color & size theory
     // use color to highlight current score, when running out of time
@@ -398,3 +422,5 @@ window.addEventListener('click', e => {
     // icons on top kinda big
 // push and hold feature in settings buttons
 // add/subtract time based on right/wrong answers
+
+// width of game window expands slightly when score increases from 9 to 10
