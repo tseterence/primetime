@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrimeTime</title>
 
-    <link rel="icon" href="images/favicon.ico">
+    <link rel="icon" href="images/favicon2.ico">
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -29,63 +29,25 @@
                         <li>
                             The game ends if an incorrect response is given.
                         </li>
-                        <!-- <li>
-                            Numbers will be randomly chosen from 1 to 200.
-                        </li>
-                        <li>
-                            A number is prime if its only two factors are 1 and itself.
-                        </li>
-                        <br>
-                        <li>
-                            Touchscreen shortcuts:
-                            Touchscreen users may also swipe left for "No" and right for "Yes".
-                            <ul class="indented">
-                                <li>
-                                    Swipe left &#8594 "No"
-                                </li>
-                                <li>
-                                    Swipe right for "Yes"
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Keyboard shortcuts:
-                            Keyboard users may also press the left arrow for "No", the right arrow for "Yes", and the space bar to Start Game/Play Again.
-                            <ul class="indented">
-                                <li>
-                                    Left arrow for "No"
-                                </li>
-                                <li>
-                                    Right arrow for "Yes"
-                                </li>
-                                <li>
-                                    Space bar to Start Game/Play Again
-                                </li>
-                            </ul>
-                        </li> -->
                     </ul>
                 </div>
 
                 <h3>Shortcuts</h3>
                 <table>
-                    <!-- <th colspan="4">Shortcuts</th> -->
                     <tr>
                         <th>&nbsp;</th>
-                        <th>"Yes"</th>
                         <th>"No"</th>
-                        <!-- <th>Start Game/Play Again</th> -->
+                        <th>"Yes"</th>
                     </tr>
                     <tr>
                         <th>Touchscreen</th>
-                        <td>Swipe Right</td>
                         <td>Swipe Left</td>
-                        <!-- <td>Swipe Up</td> -->
+                        <td>Swipe Right</td>
                     </tr>
                     <tr>
                         <th>Keyboard</th>
-                        <td>Right Arrow</td>
                         <td>Left Arrow</td>
-                        <!-- <td>Space Bar</td> -->
+                        <td>Right Arrow</td>
                     </tr>
                 </table>
             </div>
@@ -97,6 +59,7 @@
             <div id="stats-modal-close">
                 <button id="stats-modal-close-button">x</button>
             </div>
+
             <div id="stats-modal-top">
                 <h1 class="modal-title">Statistics</h1>
                 <div id="stats-wrapper">
@@ -114,6 +77,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="distribution">
                 <h3 class="distribution-text">Score Distribution</h3>
                 <div class="graph-container">
@@ -200,63 +164,12 @@
         </div>
     </div>
 
-    <!-- <div id="settings-container" class="hidden">
-        <div id="settings-modal">
-            <div id="settings-modal-close">
-                <button id="settings-modal-close-button">x</button>
-            </div>
-            <div id="settings-content">
-                <h1 class="modal-title">Settings</h1>
-                <div id="settings-options">
-                    <div id="settings-max-num">
-                        <div id="settings-max-num-text">
-                            <div>Maximum Number</div>
-
-                            <button id="subOne" class="settings">-</button>
-                            <input id="inputMaximum" type="text" onchange="resetHighScore()" value="100"
-                            readonly="readonly" />
-                            <button id="addOne" class="settings">+</button>
-                        </div>
-                    </div>
-                    <div id="settings-hard-mode">
-                        <div id="settings-hard-mode-text">
-                            <div>Hard Mode</div>
-                            <div>Only odd numbers will be shown</div>
-                        </div>
-                        <div id="settings-hard-mode-toggle">
-                            <label class="switch">
-                                <input type="checkbox" id="hardModeTogBtn" onchange="resetHighScore()">
-                                <div class="slider round">
-                                    <span class="on">ON</span>
-                                    <span class="off">OFF</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                    <div id="settings-dark-theme">
-                        <div id="settings-dark-theme-text">
-                            <div>Dark Theme</div>
-                        </div>
-                        <div id="settings-dark-theme-toggle">
-                            <label class="switch">
-                                <input type="checkbox" id="darkThemeTogBtn" onchange="resetHighScore()">
-                                <div class="slider round">
-                                    <span class="on">ON</span>
-                                    <span class="off">OFF</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <div id="game-container">
         <header>
             <div class="title">
                 <a href="#" id="home">PrimeTime</a>
             </div>
+            
             <div class="icons">
                 <button type="button" onclick="showHelpModal()">
                     <img src="images/help.png" alt="help icon" class="icon"/>
@@ -264,9 +177,6 @@
                 <button type="button" onclick="showStatsModal()">
                     <img src="images/graph.png" alt="chart icon" class="icon"/>
                 </button>
-                <!-- <button type="button" onclick="showSettingsModal()">
-                    <img src="images/settings.png" alt="settings icon" class="icon"/>
-                </button> -->
             </div>
         </header>
         
@@ -309,7 +219,7 @@
         </main>
 
         <footer>
-            <p>&#169; Terence Tse 2022</p>
+            <p>Terence Tse &#169; 2022</p>
             <p id="ref">Icons made by <a href="https://www.freepik.com/" target="_blank">Freepik</a> from <a href="https://www.flaticon.com/" target="_blank">www.flaticon.com</a></p>
         </footer>
     </div>

@@ -11,7 +11,7 @@
     // display distribution of scores under statistics
 
 
-// modals for help, stats, and settings
+// modals for help and stats
     // check active screen
         // if game is active OR home screen showing -> show home screen
         // if game over screen showing -> do nothing 
@@ -30,9 +30,6 @@ function initLocalStorage() {
         showHelpModal();
         localStorage.setItem('viewedTutorial', JSON.stringify(true));
     }
-    // if (!localStorage.getItem('hardMode')) {
-    //     localStorage.setItem('hardMode', JSON.stringify(false));
-    // }
 }
 
 function updateStatistics(score) {
@@ -92,10 +89,7 @@ homeBtn.addEventListener('click', startScreen)
 
 // return random num from 1 to n, inclusive
 function getNum(n) {
-    let result = Math.floor(Math.random() * n + 1)
-    return result
-    // if (hardModeTogBtn.checked && result % 2 === 0) return getNum(n)
-    // else return result
+    return Math.floor((Math.random() * n) + 1);
 }
 
 // check if n is prime
@@ -138,8 +132,6 @@ function startGame() {
     
     t.start()
 }
-
-
 
 
 
@@ -189,34 +181,7 @@ function checkHighScore() {
     }
 }
 
-// function resetHighScore() {
-//     document.querySelector('#high-score').innerHTML = '0'
-// }
-
-// function showHelp() {
-//     hideScreens('screen')
-//     toggleScreen('about-screen', true)
-
-//     t.stop()
-// }
-
-// function showSettings() {
-//     hideScreens('screen')
-//     toggleScreen('settings-screen', true)
-
-//     t.stop()
-// }
-
-// function showStatistics() {
-//     hideScreens('screen')
-//     toggleScreen('statistics-screen', true)
-
-//     t.stop()
-
-//     populateStatistics();
-// }
-
-// hide all divs with class as input
+// hide all divs with class as input 'cl'
 function hideScreens(cl) {
     let elements = Array.from(document.getElementsByClassName(cl))
     elements.forEach(element => element.style.display = 'none')
@@ -228,29 +193,6 @@ function toggleScreen(id, toggle) {
     const display = (toggle) ? 'block' : 'none'
     element.style.display = display
 }
-
-// document.querySelector('#subOne').addEventListener('click', () => {
-//     if (document.getElementById('inputMaximum').value > 1) {
-//         document.getElementById('inputMaximum').innerHTML = document.getElementById('inputMaximum').value--
-//     }
-// })
-// document.querySelector('#addOne').addEventListener('click', () => {
-//     if (document.getElementById('inputMaximum').value < 200) {
-//         document.getElementById('inputMaximum').innerHTML = document.getElementById('inputMaximum').value++
-//     }
-// })
-
-// document.querySelector('#subSec').addEventListener('click', () => {
-//     if (document.getElementById('inputSeconds').value > 1) {
-//         document.getElementById('inputSeconds').innerHTML = document.getElementById('inputSeconds').value--
-//     }
-// })
-// document.querySelector('#addSec').addEventListener('click', () => {
-//     if (document.getElementById('inputSeconds').value < 60) {
-//         document.getElementById('inputSeconds').innerHTML = document.getElementById('inputSeconds').value++
-//     }
-// })
-
 
 class Timer {
     constructor() {
@@ -298,11 +240,6 @@ class Timer {
 }
 
 const t = new Timer()
-
-
-// difficult mode
-const hardModeTogBtn = document.getElementById('hardModeTogBtn')
-// console.log(togBtn.checked)
 
 // use arrows on keyboard (only works when game has started)
 document.addEventListener('keydown', (e) => {
@@ -379,19 +316,6 @@ statsX.addEventListener('click', e => {
     statsContainer.classList.remove('show');
 })
 
-// settings modal
-    // stop timer, show start screen, then show modal
-// const settingsContainer = document.getElementById('settings-container');
-// function showSettingsModal() {
-//     settingsContainer.classList.add('show');
-//     settingsContainer.classList.remove('hidden');
-// }
-// const settingsX = document.getElementById('settings-modal-close-button');
-// settingsX.addEventListener('click', e => {
-//     settingsContainer.classList.add('hidden');
-//     settingsContainer.classList.remove('show');
-// })
-
 // clicking outside of modal closes it
 window.addEventListener('click', e => {
     if (e.target === helpContainer) {
@@ -402,17 +326,10 @@ window.addEventListener('click', e => {
         statsContainer.classList.remove('show');
         statsContainer.classList.add('hidden');
     }
-    // if (e.target === settingsContainer) {
-    //     settingsContainer.classList.remove('show');
-    //     settingsContainer.classList.add('hidden');
-    // }
 })
 
 
 // should statistics populate everytime "game over" instead of only after clicking on graph icon??
-// with keyboard: left arrow = no, right arrow = yes, spacebar = start game/play again
-// with touchscreen (Swipe): left = no, right = yes, up = start game/play again
-// table format for shortcuts under help modal?
 
 // if timer < 5s, font/background turns red
 // Jean's recs:
