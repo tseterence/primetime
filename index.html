@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrimeTime</title>
 
-    <link rel="icon" href="images/favicon2.ico">
+    <link rel="icon" href="images/favicon.ico">
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -19,12 +19,12 @@
             </div>
             <div id="help-content">
                 <h1 class="modal-title">How To Play</h1>
-                <h2 class="help-text">Correctly sort as many numbers in 30 seconds.</h2>
+                <p class="help-text">Correctly sort as many numbers in 30 seconds.</p>
 
                 <div class="help-rules">
                     <ul>
                         <li>
-                            For each number shown, select "Yes" if it is prime and "No" if it is not.
+                            For each number shown, select "Yes" if it is prime or "No" if it is not.
                         </li>
                         <li>
                             The game ends if an incorrect response is given.
@@ -32,7 +32,7 @@
                     </ul>
                 </div>
 
-                <h3>Shortcuts</h3>
+                <h4>Shortcuts</h4>
                 <table>
                     <tr>
                         <th>&nbsp;</th>
@@ -60,7 +60,7 @@
                 <button id="stats-modal-close-button">x</button>
             </div>
 
-            <div id="stats-modal-top">
+            <div id="stats-content">
                 <h1 class="modal-title">Statistics</h1>
                 <div id="stats-wrapper">
                     <div class="stats" id="num_games">
@@ -76,106 +76,54 @@
                         <div class="stats-unit">High</div>
                     </div>
                 </div>
-            </div>
 
-            <div id="distribution">
-                <h3 class="distribution-text">Score Distribution</h3>
-                <div class="graph-container">
-                    <div class="range">0-4</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_0">
-                            <div class="num-range"></div>
-                        </div>
+                <div class="chart">
+                    <div class="bars">
+                      <div class="bar" id="bar_0" ></div>
+                      <div class="bar" id="bar_5" ></div>
+                      <div class="bar" id="bar_10"></div>
+                      <div class="bar" id="bar_15"></div>
+                      <div class="bar" id="bar_20"></div>
+                      <div class="bar" id="bar_25"></div>
+                      <div class="bar" id="bar_30"></div>
+                      <div class="bar" id="bar_35"></div>
+                      <div class="bar" id="bar_40"></div>
+                      <div class="bar" id="bar_45"></div>
+                    </div>
+                    <div class="labels">
+                      <span>00</span>
+                      <span>05</span>
+                      <span>10</span>
+                      <span>15</span>
+                      <span>20</span>
+                      <span>25</span>
+                      <span>30</span>
+                      <span>35</span>
+                      <span>40</span>
+                      <span>45</span>
+                      <span>50</span>
                     </div>
                 </div>
-                <div class="graph-container">
-                    <div class="range">5-9</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_5">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">10-14</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_10">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">15-19</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_15">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">20-24</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_20">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">25-29</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_25">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">30-34</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_30">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">35-39</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_35">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">40-44</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_40">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="graph-container">
-                    <div class="range">45-49</div>
-                    <div class="graph">
-                        <div class="graph-bar" id="bar_45">
-                            <div class="num-range"></div>
-                        </div>
-                    </div>
-                </div>
+
+                <span>Score Distribution</span>
             </div>
         </div>
     </div>
 
     <div id="game-container">
         <header>
+            <div id="ghost-div"></div>
+
             <div class="title">
                 <a href="#" id="home">PrimeTime</a>
             </div>
             
             <div class="icons">
-                <button type="button" onclick="showHelpModal()">
-                    <img src="images/help.png" alt="help icon" class="icon"/>
+                <button aria-label="Your Stats" id="help" onclick="showHelpModal()">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                 </button>
-                <button type="button" onclick="showStatsModal()">
-                    <img src="images/graph.png" alt="chart icon" class="icon"/>
+                <button aria-label="Help" onclick="showStatsModal()">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"></path></svg>
                 </button>
             </div>
         </header>
@@ -184,7 +132,7 @@
             <div id="start-screen" class="screen" style="display: block">
                 <h1>Welcome to PrimeTime!</h1>
                 <h2>Identify the prime numbers</h2>
-                <button id="start" onclick="startGame()">Start Game</button>
+                <button id="start" class="button start" onclick="startGame()">Start Game</button>
             </div>
     
             <div id="play-screen" class="screen" style="display: none">
@@ -201,8 +149,8 @@
                     prime?
                 </h1>
                 <div class="choice">
-                    <button id="no" class="option">No</button>
-                    <button id="yes" class="option">Yes</button>
+                    <button id="no" class="button option">No</button>
+                    <button id="yes" class="button option">Yes</button>
                 </div>
             </div>
     
@@ -211,16 +159,16 @@
                 <div>
                     <h2 id="reason"></h2>
                     <br />
-                    <h3>You scored: <span id="final-score"></span></h3><br>
+                    <br />
+                    <h3>Your score: <span id="final-score"></span></h3><br>
                     <h3>High Score: <span id="high-score-2">0</span></h3>
                 </div>
-                <button id="restart" onclick="startGame()">Play Again</button>
+                <button id="restart" class="button start" onclick="startGame()">Play Again</button>
             </div>
         </main>
 
         <footer>
-            <p>Terence Tse &#169; 2022</p>
-            <p id="ref">Icons made by <a href="https://www.freepik.com/" target="_blank">Freepik</a> from <a href="https://www.flaticon.com/" target="_blank">www.flaticon.com</a></p>
+            <h5>Terence Tse &#169; 2023</h5>
         </footer>
     </div>
 

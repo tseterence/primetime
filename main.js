@@ -1,17 +1,4 @@
-// local storage data
-    // total games played
-    // avg score
-    // high score
-    // indiv game scores
-    // score distribution by range
-    // has viewed? -> triggers "How To Play" on page load 
-    // dark theme?
-    // hard mode enabled? (boolean)
-
-    // display distribution of scores under statistics
-
-
-// modals for help and stats
+// modals for help and stats, and settings
     // check active screen
         // if game is active OR home screen showing -> show home screen
         // if game over screen showing -> do nothing 
@@ -55,20 +42,15 @@ function populateStatistics() {
     highScoreEl.innerHTML = stats['highScore'];
     avgScoreEl.innerHTML = stats['avgScore'];
 
+    const mostFreq = Math.max(...Object.values(stats['scoreDist']))
     const maxRange = 45;
 
-    let scoreDistList = [];
-    for (let i = 0; i <= maxRange; i += 5) {
-        scoreDistList.push(stats['scoreDist'][String(i)]);
-    }
-
-    const mostFreq = Math.max(...scoreDistList)
     for (let i = 0; i <= maxRange; i += 5) {
         const barEl = document.getElementById('bar_' + String(i));
-        const barWidth = 8 + 92 * (stats['scoreDist'][String(i)] / mostFreq);
-        barEl.style.width = String(barWidth) + "%";
+        const barHeight = 12 + 88 * (stats['scoreDist'][String(i)] / mostFreq);
+        barEl.style.height = String(barHeight) + "%";
 
-        const barLabelEl = document.getElementById('bar_' + String(i)).querySelector('.num-range');
+        const barLabelEl = document.getElementById('bar_' + String(i));
         barLabelEl.innerHTML = stats['scoreDist'][String(i)];
     }
 }
