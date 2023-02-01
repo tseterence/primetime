@@ -1,13 +1,34 @@
-// modals for help and stats, and settings
-    // check active screen
-        // if game is active OR home screen showing -> show home screen
-        // if game over screen showing -> do nothing 
-    // open corresponding modal
-    
-window.addEventListener('load', e => {
-    initLocalStorage();
-});
+// VARIABLES
+const homeBtn = document.getElementById('home')
+const startBtn = document.getElementById('start')
+const restartBtn = document.getElementById('restart')
+const noBtn = document.getElementById('no')
+const yesBtn = document.getElementById('yes')
+const currentNum = document.getElementById('number')
+const currentScore = document.getElementById('current-score')
 
+const helpContainer = document.getElementById('help-container');
+const helpX = document.getElementById('help-modal-close-button');
+const statsContainer = document.getElementById('stats-container');
+const statsX = document.getElementById('stats-modal-close-button');
+// 
+
+// EVENT LISTENERS
+noBtn.addEventListener('click', checkPrime)
+yesBtn.addEventListener('click', checkPrime)
+homeBtn.addEventListener('click', startScreen)
+
+helpX.addEventListener('click', e => {
+    helpContainer.classList.add('hidden');
+    helpContainer.classList.remove('show');
+})
+statsX.addEventListener('click', e => {
+    statsContainer.classList.add('hidden');
+    statsContainer.classList.remove('show');
+})
+// 
+
+// LOCAL STORAGE
 function initLocalStorage() {
     if (!localStorage.getItem('statistics')) {
         const stats = {'numGames': 0, 'avgScore': 0, 'highScore': 0, 'gameScores': [], 'scoreDist': {'0': 0, '5': 0, '10': 0, '15': 0, '20': 0, '25': 0, '30': 0, '35': 0, '40': 0, '45': 0, '50': 0, '55': 0}};
@@ -42,33 +63,53 @@ function populateStatistics() {
     highScoreEl.innerHTML = stats['highScore'];
     avgScoreEl.innerHTML = stats['avgScore'];
 
-    const mostFreq = Math.max(...Object.values(stats['scoreDist']))
+    const mostFreq = Math.max(...Object.values(stats['scoreDist']));
     const maxRange = 45;
 
     for (let i = 0; i <= maxRange; i += 5) {
         const barEl = document.getElementById('bar_' + String(i));
-        const barHeight = 12 + 88 * (stats['scoreDist'][String(i)] / mostFreq);
+        const barHeight = 10 + 90 * (stats['scoreDist'][String(i)] / mostFreq);
         barEl.style.height = String(barHeight) + "%";
 
         const barLabelEl = document.getElementById('bar_' + String(i));
         barLabelEl.innerHTML = stats['scoreDist'][String(i)];
     }
 }
+//
 
-// variables
-const homeBtn = document.getElementById('home')
-const startBtn = document.getElementById('start')
-const restartBtn = document.getElementById('restart')
-const noBtn = document.getElementById('no')
-const yesBtn = document.getElementById('yes')
-const currentNum = document.getElementById('number')
-const currentScore = document.getElementById('current-score')
+// SHORTCUT FUNCTIONS
+document.addEventListener('keydown', (e) => {
+    if ((document.getElementById('start-screen').style.display === 'block') && !helpContainer.classList.contains('show') && !statsContainer.classList.contains('show') && e.code === 'Space') {
+        startBtn.click();
+    }
+    if (document.getElementById('play-screen').style.display === 'block' && e.code === 'ArrowLeft') {
+        noBtn.click();
+    } else if (document.getElementById('play-screen').style.display === 'block' && e.code === 'ArrowRight') {
+        yesBtn.click();
+    }
+    if ((document.getElementById('end-screen').style.display === 'block') && !helpContainer.classList.contains('show') && !statsContainer.classList.contains('show') && e.code === 'Space') {
+        restartBtn.click();
+    }
+});
 
-// event listeners
-noBtn.addEventListener('click', checkPrime)
-yesBtn.addEventListener('click', checkPrime)
-homeBtn.addEventListener('click', startScreen)
+let touchstartX = 0;
+let touchendX = 0;
+document.addEventListener('touchstart', e => {
+  touchstartX = e.changedTouches[0].screenX;
+})
+document.addEventListener('touchend', e => {
+  touchendX = e.changedTouches[0].screenX;
+  checkDirection();
+})
+function checkDirection() {
+    if (document.getElementById('play-screen').style.display === 'block') {
+        if (touchendX < touchstartX) noBtn.click();
+        if (touchendX > touchstartX) yesBtn.click();
+    }
+}
+// 
 
+// IN-GAME HELPER FUNCTIONS
 // return random num from 1 to n, inclusive
 function getNum(n) {
     return Math.floor((Math.random() * n) + 1);
@@ -77,27 +118,51 @@ function getNum(n) {
 // check if n is prime
 function isPrime(n) {
     for (let i = 2; i <= Math.sqrt(n); i++) {
-        if (n % i === 0) return false
+        if (n % i === 0) return false;
     }
-    return n > 1
+    return n > 1;
 }
 
 // get prime factors of composite n
 function primeFactors(n) {
-    const factors = {}
+    const factors = {};
     for (let i = 2; i <= n; i++) {
         while (n % i === 0) {
-            factors[i] ? factors[i]++ : factors[i] = 1
-            n /= i
+            factors[i] ? factors[i]++ : factors[i] = 1;
+            n /= i;
         }
     }
-    const str = []
+    const arr = []
     for (const key in factors) {
-        factors[key] > 1 ? str.push(`${key}<sup>${factors[key]}</sup>`) : str.push(`${key}`)
+        factors[key] > 1 ? arr.push(`${key}<sup>${factors[key]}</sup>`) : arr.push(`${key}`);
     }
-    return str.join(' x ')
+    return arr;
 }
 
+function checkPrime(e) {
+    if ((e.target.id === 'no' && isPrime(Number(currentNum.innerHTML))) || (e.target.id === 'yes' && !isPrime(Number(currentNum.innerHTML)))) {
+        // wrong answer - game over
+        t.stop();
+        endGame();
+
+        if (e.target.id === 'no') {
+            document.getElementById('reason').innerHTML = `${currentNum.innerHTML} is prime`;
+        } else if (e.target.id === 'yes') {
+            if (currentNum.innerHTML === '1') {
+                document.getElementById('reason').innerHTML = `By definition, 1 is not prime`;
+            } else {
+                document.getElementById('reason').innerHTML = `${currentNum.innerHTML} = ${primeFactors(Number(currentNum.innerHTML)).join(' x ')}`;
+            }
+        }
+    } else {
+        // right answer - continue game
+        currentScore.innerHTML++;
+        currentNum.innerHTML = `${getNum(100)}`;
+    }
+}
+// 
+
+// HANDLE GAME AND SCREENS
 function startScreen() {
     hideScreens('screen')
     toggleScreen('start-screen', true)
@@ -115,32 +180,6 @@ function startGame() {
     t.start()
 }
 
-
-
-function checkPrime(e) {
-    if ((e.target.id === 'no' && isPrime(Number(currentNum.innerHTML))) || (e.target.id === 'yes' && !isPrime(Number(currentNum.innerHTML)))) {
-        // wrong answer - game over
-        t.stop()
-        endGame()
-
-        if (e.target.id === 'no') {
-            document.getElementById('reason').innerHTML = `${currentNum.innerHTML} is prime`
-        } else if (e.target.id === 'yes') {
-            if (currentNum.innerHTML === '1') {
-                document.getElementById('reason').innerHTML = `By definition, 1 is not prime`
-            } else {
-                let factors = primeFactors(Number(currentNum.innerHTML))
-                document.getElementById('reason').innerHTML = `${currentNum.innerHTML} = ${factors}`
-            }
-        }
-    } else {
-        // right answer - continue game
-        currentScore.innerHTML++
-        // checkHighScore()
-        currentNum.innerHTML = `${getNum(100)}`
-    }
-}
-
 function endGame() {
     hideScreens('screen')
     toggleScreen('end-screen', true)
@@ -151,30 +190,24 @@ function endGame() {
 }
 
 function displayResult() {
-    // if prime, say prime
-    // else show first whole factor
-    document.getElementById('final-score').innerHTML = `${currentScore.innerHTML}`
+    document.getElementById('final-score').innerHTML = `${currentScore.innerHTML}`;
 }
-
-// function checkHighScore() {
-//     if (Number(currentScore.innerHTML) > Number(document.getElementById('high-score-1').innerHTML)) {
-//         document.getElementById('high-score-1').innerHTML = currentScore.innerHTML
-//     }
-// }
 
 // hide all divs with class as input 'cl'
 function hideScreens(cl) {
-    let elements = Array.from(document.getElementsByClassName(cl))
-    elements.forEach(element => element.style.display = 'none')
+    let elements = Array.from(document.getElementsByClassName(cl));
+    elements.forEach(element => element.style.display = 'none');
 }
 
 // toggle specific div with id as input
 function toggleScreen(id, toggle) {
-    const element = document.getElementById(id)
-    const display = (toggle) ? 'block' : 'none'
-    element.style.display = display
+    const element = document.getElementById(id);
+    const display = (toggle) ? 'block' : 'none';
+    element.style.display = display;
 }
+// 
 
+// TIMER
 class Timer {
     constructor() {
         this.el = {
@@ -182,120 +215,63 @@ class Timer {
             tenthSeconds: document.getElementById('tenthSeconds'),
         }
 
-        this.interval = null
-        this.remainingSeconds = 0
-        this.startTime = 0
-        this.endTime = 0
+        this.interval = null;
+        this.remainingSeconds = 0;
+        this.startTime = 0;
+        this.endTime = 0;
     }
 
     updateTimer() {
-        const seconds = Math.floor(this.remainingSeconds / 1000)
-        const tenthSeconds = Math.floor((this.remainingSeconds % 1000) / 100)
+        const seconds = Math.floor(this.remainingSeconds / 1000);
+        const tenthSeconds = Math.floor((this.remainingSeconds % 1000) / 100);
 
-        this.el.seconds.innerHTML = seconds.toString().padStart(2, "0")
-        this.el.tenthSeconds.innerHTML = tenthSeconds
+        this.el.seconds.innerHTML = seconds.toString().padStart(2, "0");
+        this.el.tenthSeconds.innerHTML = tenthSeconds;
     }
 
     start() {
-        this.startTime = new Date().getTime()
-        this.remainingSeconds = 30 * 1000
-        this.endTime = this.startTime + this.remainingSeconds
+        this.startTime = new Date().getTime();
+        this.remainingSeconds = 30 * 1000;
+        this.endTime = this.startTime + this.remainingSeconds;
         
         if (this.remainingSeconds === 0) return;
 
         this.interval = setInterval(() => {
-            this.remainingSeconds = this.endTime - Date.now()
-            this.updateTimer()
+            this.remainingSeconds = this.endTime - Date.now();
+            this.updateTimer();
             if (this.remainingSeconds <= 0) {
-                this.stop()
-                document.getElementById('reason').innerHTML = `Time's up!`
-                endGame()
+                this.stop();
+                document.getElementById('reason').innerHTML = `Time's up!`;
+                endGame();
             }
         }, 1)
     }
 
     stop() {
-        clearInterval(this.interval)
-        this.interval = null
+        clearInterval(this.interval);
+        this.interval = null;
     }
 }
+//
 
-const t = new Timer()
-
-// use arrows on keyboard (only works when game has started)
-document.addEventListener('keydown', (e) => {
-    if ((document.getElementById('start-screen').style.display === 'block') && e.code === 'Space') {
-        startBtn.click();
-    }
-    if (document.getElementById('play-screen').style.display === 'block' && e.code === 'ArrowLeft') {
-        noBtn.click();
-    } else if (document.getElementById('play-screen').style.display === 'block' && e.code === 'ArrowRight') {
-        yesBtn.click();
-    }
-    if ((document.getElementById('end-screen').style.display === 'block') && e.code === 'Space') {
-        restartBtn.click();
-    }
-});
-
-
-// use swipe on touchscreen (only works when game has started)
-let touchstartX = 0
-let touchendX = 0
-    
-function checkDirection() {
-    if (document.getElementById('play-screen').style.display === 'block') {
-        if (touchendX < touchstartX) noBtn.click()
-        if (touchendX > touchstartX) yesBtn.click()
-    }
-}
-
-document.addEventListener('touchstart', e => {
-  touchstartX = e.changedTouches[0].screenX
-})
-
-document.addEventListener('touchend', e => {
-  touchendX = e.changedTouches[0].screenX
-  checkDirection()
-})
-
-// help modal
-    // stop timer, show start screen, then show modal
-const helpContainer = document.getElementById('help-container');
+// MODALS
+// clicking on modal will: stop timer, show start screen, then show modal
 function showHelpModal() {
     if (document.getElementById('play-screen').style.display === 'block') {
         startScreen();
     }
-
     helpContainer.classList.add('show');
     helpContainer.classList.remove('hidden');
-
-    // statsContainer.classList.add('hidden');
 }
-const helpX = document.getElementById('help-modal-close-button');
-helpX.addEventListener('click', e => {
-    helpContainer.classList.add('hidden');
-    helpContainer.classList.remove('show');
-})
 
-// stats modal
-    // stop timer, show start screen, then show modal
-const statsContainer = document.getElementById('stats-container');
 function showStatsModal() {
     if (document.getElementById('play-screen').style.display === 'block') {
         startScreen();
     }
-
     populateStatistics();
     statsContainer.classList.add('show');
     statsContainer.classList.remove('hidden');
-
-    // helpContainer.classList.add('hidden');
 }
-const statsX = document.getElementById('stats-modal-close-button');
-statsX.addEventListener('click', e => {
-    statsContainer.classList.add('hidden');
-    statsContainer.classList.remove('show');
-})
 
 // clicking outside of modal closes it
 window.addEventListener('click', e => {
@@ -308,17 +284,10 @@ window.addEventListener('click', e => {
         statsContainer.classList.add('hidden');
     }
 })
+//
 
 
-// should statistics populate everytime "game over" instead of only after clicking on graph icon??
-
-// if timer < 5s, font/background turns red
-// Jean's recs:
-    // apply color & size theory
-    // use color to highlight current score, when running out of time
-    // less formal font choice
-    // icons on top kinda big
-// push and hold feature in settings buttons
-// add/subtract time based on right/wrong answers
-
-// width of game window expands slightly when score increases from 9 to 10
+window.addEventListener('load', e => {
+    initLocalStorage();
+});
+const t = new Timer();

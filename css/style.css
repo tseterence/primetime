@@ -1,37 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
-	--color-background: #121212;
-	--color-background-tinted: rgba(0, 0, 0, 0.8);
+	--color-bg: #121212;
+	--color-bg-tinted: rgba(0, 0, 0, 0.8);
 	--color-body: #FFFFFF;
-	--color-heading: #EEF3DB;
 	--color-outline: #888888;
+	--color-outline-modal: #474747;
 	--color-yes: #1DB954;
 	--color-no: #FE4C4F;
-	/* --color-start: #005EFF; */
 	--color-start: #1D9BF0;
 	--color-bar: #3A3A3C;
-	--font-base: "Orbitron";
-	--font-base2: "Montserrat";
-
-	/* 
-	bg
-	modal bg
-	tinted bg when modal active
-
-	grey border
-
-	white font
-	grey font
-	brand font fam
-	other font fam
-
-	green button
-	red button
-	blue button
-	*/
+	--font-base: "Montserrat", sans-serif;
+	--font-title: "Orbitron", sans-serif;
+	--font-mono: "Menlo", sans-serif;
 }
 
 * {
@@ -41,19 +23,10 @@
 }
 
 body {
-    background-color: var(--color-background);
+    background-color: var(--color-bg);
     color: var(--color-body);
-    font-family: var(--font-base2), sans-serif;
-	/* font-family: monospace; */
+    font-family: var(--font-base);
 }
-
-/* body {
-	height: 100%;
-	font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
-	background: white;
-	background: #aaaaaa;
-	font-family: 'Orbitron', sans-serif;
-} */
 
 
 /* HELP MODAL */
@@ -66,7 +39,7 @@ body {
 	height: 100%;
 	width: 100%;
 	padding: 12px;
-	background-color: var(--color-background-tinted);
+	background-color: var(--color-bg-tinted);
 	z-index: 150;
 }
 #help-modal, #stats-modal {
@@ -78,8 +51,8 @@ body {
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	background-color: var(--color-background);
-	border: 1px solid rgb(71, 71, 71);
+	background-color: var(--color-bg);
+	border: 1px solid var(--color-outline-modal);
 	border-radius: 2px;
 }
 #help-content {
@@ -95,8 +68,8 @@ body {
 	padding-top: 2px;
 }
 #help-modal-close-button, #stats-modal-close-button {
-	background-color: rgb(18, 18, 19);
-	color: white;
+	background-color: var(--color-bg);
+	color: var(--color-body);
 	border: none;
 	cursor: pointer;
 	font-size: 22px;
@@ -131,7 +104,7 @@ table {
 	margin-top: 8px;
 	/* color: white; */
 	border-collapse: collapse;
-	border: 1px solid rgb(200, 200, 200);
+	border: 1px solid var(--color-outline);
 	letter-spacing: 1px;
 	font-size: 12px;
 }
@@ -159,7 +132,6 @@ td {
   padding: 0 20px 20px;
   font-size: 14px;
 }
-
 #stats-wrapper {
 	display: flex;
 	justify-content: center;
@@ -173,7 +145,7 @@ td {
 	text-align: center;
 }
 .stats-num {
-	font-size: 30px;
+	font-size: 34px;
 }
 .chart {
 	height: 240px;
@@ -181,7 +153,7 @@ td {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
-	padding: 36px 0 12px;
+	padding: 36px 0 20px;
 }
 .bars {
 	height: 100%;
@@ -195,7 +167,8 @@ td {
 	margin: 1px;
 }
 .labels {
-	font-family: monospace;
+	font-family: var(--font-mono);
+	font-size: 12px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -208,11 +181,13 @@ td {
 	margin: 60px 8px 20px;
   	border: none;
   	box-shadow: 0px 0px 16px -6px rgba(0, 0, 0, .5);
-  	color: white;
+  	color: var(--color-body);
   	font-size: 1.25rem;
+	font-weight: 600;
   	letter-spacing: 1px;
   	outline: none;
   	cursor: pointer;
+	font-family: var(--font-base);
 }
 button:hover {
 	cursor: pointer;
@@ -249,14 +224,23 @@ button:hover {
 	text-align: center;
 	margin: auto auto;
 }
-.title, #reason {
+.title {
+	font-family: var(--font-title);
+	font-size: 42px;
 	margin-bottom: 40px;
 }
-.live-game {
+#reason {
+	font-size: 38px;
+	margin-bottom: 40px;
+}
+.score, #high {
+	margin-top: 8px;
+}
+.score {
 	margin-bottom: 30px;
 }
-.timer, #high {
-	margin-top: 8px;
+.mono {
+	font-family: var(--font-mono);
 }
 #number {
 	font-size: 72px;
@@ -274,8 +258,8 @@ header {
 	border-bottom: 1px solid var(--color-outline);
 }
 #home {
-	font: 700 32px var(--font-base), sans-serif;
-	color: white;
+	font: 700 32px var(--font-title);
+	color: var(--color-body);
 	text-decoration: none;
 }
 .icons {
@@ -302,8 +286,9 @@ footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	margin-bottom: 12px;
+	margin-bottom: 10px;
 	text-align: center;
+	font-size: 16px;
 }
 /* //FOOTER */
 
@@ -319,3 +304,9 @@ footer {
 		display: block; 
 	}
 }
+
+/* 
+- style shortcuts table
+- fix variable usage
+- fix font family
+ */

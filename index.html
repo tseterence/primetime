@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrimeTime</title>
 
-    <link rel="icon" href="images/favicon2.ico">
+    <link rel="icon" href="images/favicon.png">
     <!-- <link rel="stylesheet" href="css/normalize.css" /> -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -133,16 +133,14 @@
         
         <main id="game">
             <div id="start-screen" class="screen" style="display: block">
-                <h1 id="welcome" class="title">Welcome to PrimeTime!</h1>
+                <h1 class="title">Welcome to PrimeTime</h1>
                 <h3>Identify the prime numbers</h3>
                 <button id="start" class="button start" onclick="startGame()">Start Game</button>
             </div>
     
             <div id="play-screen" class="screen" style="display: none">
-                <div class="live-game">
-                    <h2>Score: <span id="current-score">0</span></h2>
-                    <h2 class="timer">Time left: <span id="seconds"></span>.<span id="tenthSeconds"></span>s</h2>
-                </div>
+                <h2 class="mono">Time left: <span id="seconds"></span>.<span id="tenthSeconds"></span>s</h2>
+                <h2 class="score mono">Score: <span id="current-score">0</span></h2>
 
                 <h1 class="number">
                     <p>Is</p>
@@ -160,15 +158,15 @@
                 <h1 class="title">Game Over</h1>
                 <div>
                     <h2 id="reason"></h2>
-                    <h3>Your score: <span id="final-score"></span></h3>
-                    <h3 id="high">Best Score: <span id="high-score"></span></h3>
+                    <h3 class="mono">Your Score: <span id="final-score"></span></h3>
+                    <h3 id="high" class="mono">Best Score: <span id="high-score"></span></h3>
                 </div>
                 <button id="restart" class="button start" onclick="startGame()">Play Again</button>
             </div>
         </main>
 
         <footer>
-            <h5>Terence Tse &#169; 2023</h5>
+            <span>Terence Tse &#169; 2023</span>
         </footer>
     </div>
 
