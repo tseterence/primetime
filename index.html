@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrimeTime</title>
 
-    <link rel="icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="icon" href="images/favicon2.ico">
+    <!-- <link rel="stylesheet" href="css/normalize.css" /> -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -24,7 +24,7 @@
                 <div class="help-rules">
                     <ul>
                         <li>
-                            For each number shown, select "Yes" if it is prime or "No" if it is not.
+                            For each number shown, select "Yes" if it is prime and "No" if it is not.
                         </li>
                         <li>
                             The game ends if an incorrect response is given.
@@ -67,10 +67,12 @@
                         <div class="stats-num"></div>
                         <div class="stats-unit">Played</div>
                     </div>
+
                     <div class="stats" id="avg_score">
                         <div class="stats-num"></div>
                         <div class="stats-unit">Avg</div>
                     </div>
+                    
                     <div class="stats" id="high_score">
                         <div class="stats-num"></div>
                         <div class="stats-unit">High</div>
@@ -79,29 +81,30 @@
 
                 <div class="chart">
                     <div class="bars">
-                      <div class="bar" id="bar_0" ></div>
-                      <div class="bar" id="bar_5" ></div>
-                      <div class="bar" id="bar_10"></div>
-                      <div class="bar" id="bar_15"></div>
-                      <div class="bar" id="bar_20"></div>
-                      <div class="bar" id="bar_25"></div>
-                      <div class="bar" id="bar_30"></div>
-                      <div class="bar" id="bar_35"></div>
-                      <div class="bar" id="bar_40"></div>
-                      <div class="bar" id="bar_45"></div>
+                        <div class="bar" id="bar_0"></div>
+                        <div class="bar" id="bar_5"></div>
+                        <div class="bar" id="bar_10"></div>
+                        <div class="bar" id="bar_15"></div>
+                        <div class="bar" id="bar_20"></div>
+                        <div class="bar" id="bar_25"></div>
+                        <div class="bar" id="bar_30"></div>
+                        <div class="bar" id="bar_35"></div>
+                        <div class="bar" id="bar_40"></div>
+                        <div class="bar" id="bar_45"></div>
                     </div>
+
                     <div class="labels">
-                      <span>00</span>
-                      <span>05</span>
-                      <span>10</span>
-                      <span>15</span>
-                      <span>20</span>
-                      <span>25</span>
-                      <span>30</span>
-                      <span>35</span>
-                      <span>40</span>
-                      <span>45</span>
-                      <span>50</span>
+                        <span>00</span>
+                        <span>05</span>
+                        <span>10</span>
+                        <span>15</span>
+                        <span>20</span>
+                        <span>25</span>
+                        <span>30</span>
+                        <span>35</span>
+                        <span>40</span>
+                        <span>45</span>
+                        <span>50</span>
                     </div>
                 </div>
 
@@ -114,7 +117,7 @@
         <header>
             <div id="ghost-div"></div>
 
-            <div class="title">
+            <div>
                 <a href="#" id="home">PrimeTime</a>
             </div>
             
@@ -130,24 +133,23 @@
         
         <main id="game">
             <div id="start-screen" class="screen" style="display: block">
-                <h1>Welcome to PrimeTime!</h1>
-                <h2>Identify the prime numbers</h2>
+                <h1 id="welcome" class="title">Welcome to PrimeTime!</h1>
+                <h3>Identify the prime numbers</h3>
                 <button id="start" class="button start" onclick="startGame()">Start Game</button>
             </div>
     
             <div id="play-screen" class="screen" style="display: none">
-                <div class="scores">
-                    <h3>High Score: <span id="high-score-1">0</span></h3>
-                    <h2>Current Score: <span id="current-score">0</span></h2>
+                <div class="live-game">
+                    <h2>Score: <span id="current-score">0</span></h2>
+                    <h2 class="timer">Time left: <span id="seconds"></span>.<span id="tenthSeconds"></span>s</h2>
                 </div>
-                <h2 class="timer">
-                    Time left: <span id="seconds"></span>.<span id="tenthSeconds"></span>s
-                </h2>
+
                 <h1 class="number">
-                    Is<br />
-                    <span id="number"></span><br />
-                    prime?
+                    <p>Is</p>
+                    <p><span id="number"></span></p>
+                    <p>prime?</p>
                 </h1>
+
                 <div class="choice">
                     <button id="no" class="button option">No</button>
                     <button id="yes" class="button option">Yes</button>
@@ -155,13 +157,11 @@
             </div>
     
             <div id="end-screen" class="screen" style="display: none">
-                <h1>Game Over</h1>
+                <h1 class="title">Game Over</h1>
                 <div>
                     <h2 id="reason"></h2>
-                    <br />
-                    <br />
-                    <h3>Your score: <span id="final-score"></span></h3><br>
-                    <h3>High Score: <span id="high-score-2">0</span></h3>
+                    <h3>Your score: <span id="final-score"></span></h3>
+                    <h3 id="high">Best Score: <span id="high-score"></span></h3>
                 </div>
                 <button id="restart" class="button start" onclick="startGame()">Play Again</button>
             </div>

@@ -136,7 +136,7 @@ function checkPrime(e) {
     } else {
         // right answer - continue game
         currentScore.innerHTML++
-        checkHighScore()
+        // checkHighScore()
         currentNum.innerHTML = `${getNum(100)}`
     }
 }
@@ -145,10 +145,9 @@ function endGame() {
     hideScreens('screen')
     toggleScreen('end-screen', true)
 
-    document.getElementById('high-score-2').innerHTML = document.getElementById('high-score-1').innerHTML
-
-    displayResult();
     updateStatistics(Number(currentScore.innerHTML));
+    displayResult();
+    document.getElementById('high-score').innerHTML = JSON.parse(localStorage.getItem('statistics'))['highScore'];
 }
 
 function displayResult() {
@@ -157,11 +156,11 @@ function displayResult() {
     document.getElementById('final-score').innerHTML = `${currentScore.innerHTML}`
 }
 
-function checkHighScore() {
-    if (Number(currentScore.innerHTML) > Number(document.getElementById('high-score-1').innerHTML)) {
-        document.getElementById('high-score-1').innerHTML = currentScore.innerHTML
-    }
-}
+// function checkHighScore() {
+//     if (Number(currentScore.innerHTML) > Number(document.getElementById('high-score-1').innerHTML)) {
+//         document.getElementById('high-score-1').innerHTML = currentScore.innerHTML
+//     }
+// }
 
 // hide all divs with class as input 'cl'
 function hideScreens(cl) {

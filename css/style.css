@@ -10,7 +10,9 @@
 	--color-outline: #888888;
 	--color-yes: #1DB954;
 	--color-no: #FE4C4F;
-	--color-start: #005EFF;
+	/* --color-start: #005EFF; */
+	--color-start: #1D9BF0;
+	--color-bar: #3A3A3C;
 	--font-base: "Orbitron";
 	--font-base2: "Montserrat";
 
@@ -52,44 +54,6 @@ body {
 	background: #aaaaaa;
 	font-family: 'Orbitron', sans-serif;
 } */
-
-
-
-/* HEADER */
-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	padding: 10px 20px;
-	border-bottom: 1px solid var(--color-outline);
-}
-#home {
-	font: 700 32px var(--font-base), sans-serif;
-	color: white;
-	text-decoration: none;
-}
-.icons {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.icons button {
-	border: none;
-	background-color: transparent;
-}
-#help {
-	margin: 0 15px;
-}
-#ghost-div {
-	height: 24px;
-	width: 78px;
-}
-
-button:hover {
-	cursor: pointer;
-}
-/* //HEADER */
 
 
 /* HELP MODAL */
@@ -227,7 +191,7 @@ td {
 }
 .bar {
 	width: 100%;
-	background: green;
+	background: var(--color-bar);
 	margin: 1px;
 }
 .labels {
@@ -241,7 +205,7 @@ td {
 
 /* BUTTONS */
 .button {
-	margin: 20px 8px;
+	margin: 60px 8px 20px;
   	border: none;
   	box-shadow: 0px 0px 16px -6px rgba(0, 0, 0, .5);
   	color: white;
@@ -249,6 +213,9 @@ td {
   	letter-spacing: 1px;
   	outline: none;
   	cursor: pointer;
+}
+button:hover {
+	cursor: pointer;
 }
 .start {
 	width: 180px;
@@ -271,31 +238,63 @@ td {
 
 
 /* GAME */
+#game-container {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	flex-direction: column;
+}
+#game {
+	padding: 20px;
+	text-align: center;
+	margin: auto auto;
+}
+.title, #reason {
+	margin-bottom: 40px;
+}
+.live-game {
+	margin-bottom: 30px;
+}
+.timer, #high {
+	margin-top: 8px;
+}
 #number {
 	font-size: 72px;
 }
-
-.screen {
-	/* margin-top: 120px; */
-	text-align: center;
-	/* width: 100%; */
-}
-
-#game-container {
-	display: flex;
-	/* background-color: rgb(18, 18, 18); */
-	height: 100%;
-	width: 100%;
-	/* padding: 15px; */
-	flex-direction: column;
-	align-items: center;
-	/* justify-content: space-between; */
-}
-
-main {
-	margin: auto auto;
-}
 /* //GAME */
+
+
+/* HEADER */
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 10px 20px;
+	border-bottom: 1px solid var(--color-outline);
+}
+#home {
+	font: 700 32px var(--font-base), sans-serif;
+	color: white;
+	text-decoration: none;
+}
+.icons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.icons button {
+	border: none;
+	background-color: transparent;
+}
+#help {
+	margin: 0 15px;
+}
+#ghost-div {
+	height: 24px;
+	width: 78px;
+}
+/* //HEADER */
 
 
 /* FOOTER */
@@ -303,7 +302,7 @@ footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 	text-align: center;
 }
 /* //FOOTER */
