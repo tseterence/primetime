@@ -11,7 +11,8 @@
 	--color-no: #FE4C4F;
 	--color-start: #1D9BF0;
 	--color-bar: #3A3A3C;
-	--font-base: "Montserrat", sans-serif;
+	/* --font-base: "Montserrat", sans-serif; */
+	--font-base: "Menlo", sans-serif;
 	--font-title: "Orbitron", sans-serif;
 	--font-mono: "Menlo", sans-serif;
 }
@@ -183,11 +184,11 @@ td {
   	box-shadow: 0px 0px 16px -6px rgba(0, 0, 0, .5);
   	color: var(--color-body);
   	font-size: 1.25rem;
+	font-family: var(--font-base);
 	font-weight: 600;
   	letter-spacing: 1px;
   	outline: none;
   	cursor: pointer;
-	font-family: var(--font-base);
 }
 button:hover {
 	cursor: pointer;
@@ -195,13 +196,16 @@ button:hover {
 .start {
 	width: 180px;
   	height: 50px;
-	border-radius: 25px;
+	border-radius: 5px;
+	/* border-radius: 25px; */
 	background-color: var(--color-start);
 }
 .option {
 	width: 100px;
   	height: 50px;
-	border-radius: 25px;
+	border-radius: 5px;
+
+	/* border-radius: 25px; */
 }
 #yes {
 	background-color: var(--color-yes);
@@ -288,7 +292,7 @@ footer {
 	width: 100%;
 	margin-bottom: 10px;
 	text-align: center;
-	font-size: 16px;
+	font-size: 12px;
 }
 /* //FOOTER */
 
