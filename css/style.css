@@ -11,10 +11,8 @@
 	--color-no: #FE4C4F;
 	--color-start: #1D9BF0;
 	--color-bar: #3A3A3C;
-	/* --font-base: "Montserrat", sans-serif; */
 	--font-base: "Menlo", sans-serif;
 	--font-title: "Orbitron", sans-serif;
-	--font-mono: "Menlo", sans-serif;
 }
 
 * {
@@ -85,13 +83,17 @@ body {
 }
 .help-rules {
 	padding-inline-start: 20px;
-	margin: 16px 0;
+	margin: 24px 0;
 }
 .help-rules ul {
 	line-height: 140%;
 }
 .help-rules li {
 	margin-bottom: 8px;
+	font-size: 12px;
+}
+.help-rules li span {
+	font-size: 16px;
 }
 #help-container.hidden, #stats-container.hidden {
 	display: none;
@@ -105,7 +107,6 @@ body {
 /* SHORTCUTS TABLE */
 table {
 	margin-top: 8px;
-	/* color: white; */
 	border-collapse: collapse;
 	border: 1px solid var(--color-outline);
 	letter-spacing: 1px;
@@ -170,7 +171,7 @@ td {
 	margin: 1px;
 }
 .labels {
-	font-family: var(--font-mono);
+	font-family: var(--font-base);
 	font-size: 12px;
 	display: flex;
 	flex-direction: row;
@@ -199,15 +200,12 @@ button:hover {
 	width: 180px;
   	height: 50px;
 	border-radius: 10px;
-	/* border-radius: 25px; */
 	background-color: var(--color-start);
 }
 .option {
 	width: 100px;
   	height: 50px;
 	border-radius: 10px;
-
-	/* border-radius: 25px; */
 }
 #yes {
 	background-color: var(--color-yes);
@@ -246,7 +244,7 @@ button:hover {
 	margin-bottom: 30px;
 }
 .mono {
-	font-family: var(--font-mono);
+	font-family: var(--font-base);
 }
 #number {
 	font-size: 72px;
@@ -310,9 +308,3 @@ footer {
 		display: block; 
 	}
 }
-
-/* 
-- style shortcuts table
-- fix variable usage
-- fix font family
- */
