@@ -14,8 +14,8 @@ const statsX = document.getElementById('stats-modal-close-button');
 // 
 
 // EVENT LISTENERS
-noBtn.addEventListener('click', checkPrime)
-yesBtn.addEventListener('click', checkPrime)
+noBtn.addEventListener('click', checkAnswer)
+yesBtn.addEventListener('click', checkAnswer)
 homeBtn.addEventListener('click', startScreen)
 
 helpX.addEventListener('click', e => {
@@ -139,12 +139,13 @@ function primeFactors(n) {
     return arr;
 }
 
-function checkPrime(e) {
+function checkAnswer(e) {
     if ((e.target.id === 'no' && isPrime(Number(currentNum.innerHTML))) || (e.target.id === 'yes' && !isPrime(Number(currentNum.innerHTML)))) {
         // wrong answer - game over
         t.stop();
         endGame();
 
+        // give explanation for wrong answer
         if (e.target.id === 'no') {
             document.getElementById('reason').innerHTML = `${currentNum.innerHTML} is prime`;
         } else if (e.target.id === 'yes') {
@@ -225,13 +226,13 @@ class Timer {
         const seconds = Math.floor(this.remainingSeconds / 1000);
         const tenthSeconds = Math.floor((this.remainingSeconds % 1000) / 100);
 
-        this.el.seconds.innerHTML = seconds.toString().padStart(2, "0");
+        this.el.seconds.innerHTML = String(seconds).padStart(2, "0");
         this.el.tenthSeconds.innerHTML = tenthSeconds;
     }
 
     start() {
         this.startTime = new Date().getTime();
-        this.remainingSeconds = 30 * 1000;
+        this.remainingSeconds = 5 * 1000;
         this.endTime = this.startTime + this.remainingSeconds;
         
         if (this.remainingSeconds === 0) return;
@@ -244,7 +245,7 @@ class Timer {
                 document.getElementById('reason').innerHTML = `Time's up!`;
                 endGame();
             }
-        }, 1)
+        }, 100)
     }
 
     stop() {
