@@ -3,16 +3,17 @@
 ## Description
 PrimeTime is an interactive numbers game that tests your ability to identify prime numbers within the allotted time.
 
-> [Play it here](https://ttse23.github.io/primetime/)
+## [Play it here](https://ttse23.github.io/primetime/)
 
-### Live Demo
+### Screenshots
 ![primetime-demo](https://user-images.githubusercontent.com/86040386/217449630-7cb6e63c-8a45-43c7-a639-c74cc26014d2.gif)
 
 ## Features
-* Seamless countdown timer integration
-* Modals for *How To Play* and *Statistics*
-* Game statistics saved in localStorage
-* Responsive web design
+- Seamless countdown timer integration
+- Modals for *How To Play* and *Statistics*
+- Game statistics saved to localStorage
+- Responsive web design
+- Clean, minimalist UI design
 
 ## How It's Made:
 **Tech used:** HTML, CSS, JavaScript
