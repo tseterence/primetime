@@ -232,7 +232,7 @@ class Timer {
 
     start() {
         this.startTime = new Date().getTime();
-        this.remainingSeconds = 5 * 1000;
+        this.remainingSeconds = 30 * 1000;
         this.endTime = this.startTime + this.remainingSeconds;
         
         if (this.remainingSeconds === 0) return;
