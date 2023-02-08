@@ -195,6 +195,8 @@ td {
 }
 button:hover {
 	cursor: pointer;
+}
+.start:hover, .option:hover {
 	box-shadow: 0px 0px 10px 2px var(--color-body);
 }
 .start {

@@ -1,10 +1,9 @@
 # PrimeTime: [Play Here](https://ttse23.github.io/primetime/)
 
-PrimeTime is an interactive numbers game that tests your ability to identify prime numbers within the allotted time.
+PrimeTime is an interactive numbers game that tests your ability to identify prime numbers within the allotted time.<br>
 
-![primetime-demo](/images/primetime-demo.gif)
-![primetime-instructions-modal](/images/primetime-instructions.png)
-![primetime-statistics-modal](/images/primetime-statistics.png)
+![primetime-demo](https://user-images.githubusercontent.com/86040386/217417641-3bcc93d9-5a75-4466-a7be-943d555aff41.gif)
+![primetime-modals](https://user-images.githubusercontent.com/86040386/217417723-1d4854e2-c538-4b36-9cbf-1182aec6901c.gif)
 
 ## Features
 * Countdown timer integration
@@ -21,7 +20,7 @@ In order to create this game, I broke down the content into three distinct parts
 The main gameplay functions include:
 * `getNum` - selects a random number from 1 to n, inclusively *(Note: n is defaulted to 100)*
 * `isPrime` - checks if a number is prime or not
-* `checkAnswer` - checks user's answer, and gives explanation if incorrect
+* `checkAnswer` - checks user's answer, and gives explanation if incorrect<br>
 
 The logic of the game is as follows:
 1. Random number is selected and displayed
