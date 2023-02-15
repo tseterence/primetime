@@ -61,12 +61,12 @@ body {
 	justify-content: flex-start;
 	padding: 0 20px 20px;
 }
-#help-modal-close, #stats-modal-close {
+#help-modal-close, #stats-modal-close, #reset-modal-close {
 	align-self: flex-end;
 	padding-right: 10px;
 	padding-top: 2px;
 }
-#help-modal-close-button, #stats-modal-close-button {
+#help-modal-close-button, #stats-modal-close-button, #reset-modal-close-button {
 	background-color: var(--color-bg);
 	color: var(--color-body);
 	border: none;
@@ -86,7 +86,7 @@ body {
 	margin: 24px 0;
 }
 .help-rules ul {
-	line-height: 140%;
+	line-height: 1.4;
 }
 .help-rules li {
 	margin-bottom: 8px;
@@ -95,10 +95,10 @@ body {
 .help-rules li span {
 	font-size: 16px;
 }
-#help-container.hidden, #stats-container.hidden {
+#help-container.hidden, #stats-container.hidden, #reset-container.hidden {
 	display: none;
 }
-#help-container.show, #stats-container.show {
+#help-container.show, #stats-container.show, #reset-container.show {
 	opacity: 1;
 }
 /* //HELP MODAL */
@@ -180,6 +180,49 @@ td {
 /* //STATS MODAL */
 
 
+/* RESET MODAL */
+#reset-span {
+	margin-top: 60px;
+}
+#reset-container {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	padding: 12px;
+	background-color: var(--color-bg-tinted);
+	z-index: 150;
+}
+#reset-modal {
+	margin-top: 260px;
+	width: 85%;
+	max-width: 500px;
+	min-width: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: var(--color-bg);
+	border: 1px solid var(--color-outline-modal);
+	border-radius: 2px;
+}
+#reset-content {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0 20px 20px;
+}
+#reset-content p {
+	line-height: 1.5;
+}
+/* //RESET MODAL */
+
+
 /* BUTTONS */
 .button {
 	margin: 60px 8px 20px;
@@ -196,7 +239,7 @@ td {
 button:hover {
 	cursor: pointer;
 }
-.start:hover, .option:hover {
+.start:hover, .option:hover, .reset:hover {
 	box-shadow: 0px 0px 10px 2px var(--color-body);
 }
 .start {
@@ -214,6 +257,32 @@ button:hover {
 	background-color: var(--color-yes);
 }
 #no {
+	background-color: var(--color-no);
+}
+#reset-stats {
+	background: none;
+	border: none;
+  	color: var(--color-body);
+	font-family: var(--font-base);
+	font-size: 14px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.reset {
+	margin-top: 40px;
+	width: 180px;
+	height: 50px;
+  	border-radius: 10px;
+ 	background-color: var(--color-no);
+}
+#cancel, #confirm {
+	width: 100px;
+  	height: 40px;
+}
+#cancel {
+	background-color: var(--color-outline);
+}
+#confirm {
 	background-color: var(--color-no);
 }
 /* //BUTTONS */

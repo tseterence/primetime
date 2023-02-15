@@ -11,6 +11,14 @@ const helpContainer = document.getElementById('help-container');
 const helpX = document.getElementById('help-modal-close-button');
 const statsContainer = document.getElementById('stats-container');
 const statsX = document.getElementById('stats-modal-close-button');
+
+const resetContainer = document.getElementById('reset-container');
+const resetX = document.getElementById('reset-modal-close-button');
+
+const resetStatsBtn = document.getElementById('reset-stats');
+const cancelBtn = document.getElementById('cancel');
+const confirmBtn = document.getElementById('confirm');
+
 // 
 
 // EVENT LISTENERS
@@ -25,6 +33,21 @@ helpX.addEventListener('click', e => {
 statsX.addEventListener('click', e => {
     statsContainer.classList.add('hidden');
     statsContainer.classList.remove('show');
+})
+resetX.addEventListener('click', e => {
+    resetContainer.classList.add('hidden');
+    resetContainer.classList.remove('show');
+})
+
+resetStatsBtn.addEventListener('click', confirmReset)
+cancelBtn.addEventListener('click', e => {
+    resetContainer.classList.add('hidden');
+    resetContainer.classList.remove('show');
+})
+confirmBtn.addEventListener('click', e => {
+    resetLocalStorage();
+    resetContainer.classList.add('hidden');
+    resetContainer.classList.remove('show');
 })
 // 
 
@@ -69,11 +92,18 @@ function populateStatistics() {
     for (let i = 0; i <= maxRange; i += 5) {
         const barEl = document.getElementById('bar_' + String(i));
         const barHeight = 10 + 90 * (stats['scoreDist'][String(i)] / mostFreq);
-        barEl.style.height = String(barHeight) + "%";
+        barEl.style.height = barHeight ? String(barHeight) + '%' : '10%';
 
         const barLabelEl = document.getElementById('bar_' + String(i));
         barLabelEl.innerHTML = stats['scoreDist'][String(i)];
     }
+}
+
+function resetLocalStorage() {
+    const stats = {'numGames': 0, 'avgScore': 0, 'highScore': 0, 'gameScores': [], 'scoreDist': {'0': 0, '5': 0, '10': 0, '15': 0, '20': 0, '25': 0, '30': 0, '35': 0, '40': 0, '45': 0, '50': 0, '55': 0}};
+    localStorage.setItem('statistics', JSON.stringify(stats));
+
+    populateStatistics();
 }
 //
 
@@ -226,7 +256,7 @@ class Timer {
         const seconds = Math.floor(this.remainingSeconds / 1000);
         const tenthSeconds = Math.floor((this.remainingSeconds % 1000) / 100);
 
-        this.el.seconds.innerHTML = String(seconds).padStart(2, "0");
+        this.el.seconds.innerHTML = String(seconds).padStart(2, '0');
         this.el.tenthSeconds.innerHTML = tenthSeconds;
     }
 
@@ -274,6 +304,11 @@ function showStatsModal() {
     statsContainer.classList.remove('hidden');
 }
 
+function confirmReset() {
+    resetContainer.classList.add('show');
+    resetContainer.classList.remove('hidden');
+}
+
 // clicking outside of modal closes it
 window.addEventListener('click', e => {
     if (e.target === helpContainer) {
@@ -283,6 +318,10 @@ window.addEventListener('click', e => {
     if (e.target === statsContainer) {
         statsContainer.classList.remove('show');
         statsContainer.classList.add('hidden');
+    }
+    if (e.target === resetContainer) {
+        resetContainer.classList.remove('show');
+        resetContainer.classList.add('hidden');
     }
 })
 //
