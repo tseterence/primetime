@@ -46,6 +46,7 @@ cancelBtn.addEventListener('click', e => {
 })
 confirmBtn.addEventListener('click', e => {
     resetLocalStorage();
+    startScreen();
     resetContainer.classList.add('hidden');
     resetContainer.classList.remove('show');
 })
