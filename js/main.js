@@ -332,3 +332,5 @@ window.addEventListener('load', e => {
     initLocalStorage();
 });
 const t = new Timer();
+
+// innerHTML over textContent for superscript purposes
