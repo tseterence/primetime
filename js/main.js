@@ -83,9 +83,9 @@ function populateStatistics() {
 
     const stats = JSON.parse(localStorage.getItem('statistics'));
 
-    numGamesEl.textContent = stats['numGames'];
-    highScoreEl.textContent = stats['highScore'];
-    avgScoreEl.textContent = stats['avgScore'];
+    numGamesEl.innerHTML = stats['numGames'];
+    highScoreEl.innerHTML = stats['highScore'];
+    avgScoreEl.innerHTML = stats['avgScore'];
 
     const mostFreq = Math.max(...Object.values(stats['scoreDist']));
     const maxRange = 45;
@@ -96,7 +96,7 @@ function populateStatistics() {
         barEl.style.height = barHeight ? String(barHeight) + '%' : '10%';
 
         const barLabelEl = document.getElementById('bar_' + String(i));
-        barLabelEl.textContent = stats['scoreDist'][String(i)];
+        barLabelEl.innerHTML = stats['scoreDist'][String(i)];
     }
 }
 
@@ -171,25 +171,25 @@ function primeFactors(n) {
 }
 
 function checkAnswer(e) {
-    if ((e.target.id === 'no' && isPrime(Number(currentNum.textContent))) || (e.target.id === 'yes' && !isPrime(Number(currentNum.textContent)))) {
+    if ((e.target.id === 'no' && isPrime(Number(currentNum.innerHTML))) || (e.target.id === 'yes' && !isPrime(Number(currentNum.innerHTML)))) {
         // wrong answer - game over
         t.stop();
         endGame();
 
         // give explanation for wrong answer
         if (e.target.id === 'no') {
-            document.getElementById('reason').textContent = `${currentNum.textContent} is prime`;
+            document.getElementById('reason').innerHTML = `${currentNum.innerHTML} is prime`;
         } else if (e.target.id === 'yes') {
-            if (currentNum.textContent === '1') {
-                document.getElementById('reason').textContent = `By definition, 1 is not prime`;
+            if (currentNum.innerHTML === '1') {
+                document.getElementById('reason').innerHTML = `By definition, 1 is not prime`;
             } else {
-                document.getElementById('reason').textContent = `${currentNum.textContent} = ${primeFactors(Number(currentNum.textContent)).join(' x ')}`;
+                document.getElementById('reason').innerHTML = `${currentNum.innerHTML} = ${primeFactors(Number(currentNum.innerHTML)).join(' x ')}`;
             }
         }
     } else {
         // right answer - continue game
-        currentScore.textContent++;
-        currentNum.textContent = `${getNum(100)}`;
+        currentScore.innerHTML++;
+        currentNum.innerHTML = `${getNum(100)}`;
     }
 }
 // 
@@ -206,8 +206,8 @@ function startGame() {
     hideScreens('screen')
     toggleScreen('play-screen', true)
 
-    currentScore.textContent = '0'
-    currentNum.textContent = `${getNum(100)}`
+    currentScore.innerHTML = '0'
+    currentNum.innerHTML = `${getNum(100)}`
     
     t.start()
 }
@@ -216,13 +216,13 @@ function endGame() {
     hideScreens('screen')
     toggleScreen('end-screen', true)
 
-    updateStatistics(Number(currentScore.textContent));
+    updateStatistics(Number(currentScore.innerHTML));
     displayResult();
-    document.getElementById('high-score').textContent = JSON.parse(localStorage.getItem('statistics'))['highScore'];
+    document.getElementById('high-score').innerHTML = JSON.parse(localStorage.getItem('statistics'))['highScore'];
 }
 
 function displayResult() {
-    document.getElementById('final-score').textContent = `${currentScore.textContent}`;
+    document.getElementById('final-score').innerHTML = `${currentScore.innerHTML}`;
 }
 
 // hide all divs with class as input 'cl'
@@ -257,8 +257,8 @@ class Timer {
         const seconds = Math.floor(this.remainingSeconds / 1000);
         const tenthSeconds = Math.floor((this.remainingSeconds % 1000) / 100);
 
-        this.el.seconds.textContent = String(seconds).padStart(2, '0');
-        this.el.tenthSeconds.textContent = tenthSeconds;
+        this.el.seconds.innerHTML = String(seconds).padStart(2, '0');
+        this.el.tenthSeconds.innerHTML = tenthSeconds;
     }
 
     start() {
@@ -273,7 +273,7 @@ class Timer {
             this.updateTimer();
             if (this.remainingSeconds <= 0) {
                 this.stop();
-                document.getElementById('reason').textContent = `Time's up!`;
+                document.getElementById('reason').innerHTML = `Time's up!`;
                 endGame();
             }
         }, 100)
