@@ -3,7 +3,7 @@
 ## Description
 PrimeTime is an interactive numbers game that tests your ability to identify prime numbers within the allotted time.
 
-## [Play it here](https://ttse23.github.io/primetime/)
+## [Play it here](https://tseterence.github.io/primetime/)
 
 ### Screenshots
 ![primetime-demo](https://user-images.githubusercontent.com/86040386/217449630-7cb6e63c-8a45-43c7-a639-c74cc26014d2.gif)
